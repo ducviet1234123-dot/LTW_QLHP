@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <title>Đăng Nhập</title>
+    <style>
+        body{
+            background-image: url('./images/back-groud.jpg');
+            background-size: cover;
+            background-position-y: -80px;
+             font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <form action="" id="form-login">
+            <h1 class="form-heading">Form đăng nhập</h1>
+            <div class="form-group">
+                <i class="far fa-user"></i>
+                <input type="text" class="form-input" placeholder="Tên đăng nhập" id="username">
+                <div id="usernameError" style="color: red; display: none;">Không được bỏ trống</div>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-key"></i>
+                <input type="password" class="form-input" placeholder="Mật khẩu" id="password">
+                <div id="eye">
+                    <i class="far fa-eye"></i>
+                </div>
+                <div id="passwordError" style="color: red; display: none;">Không được bỏ trống</div>
+            </div>
+            <input type="submit" value="Đăng nhập" class="form-submit">
+            <p style="color: aliceblue; text-align: center;">Bạn chưa có tài khoản? <a href="dangky.html">Đăng Ký</a></p>
+        </form>
+    </div>
+    
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="./js/main.js"></script>
+</html>

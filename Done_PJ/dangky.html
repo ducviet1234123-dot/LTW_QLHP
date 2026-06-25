@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Đăng Ký</title>
+    <style>
+        body{
+            background-image: url('./images/back-groud.jpg');
+            background-size: cover;
+            background-position-y: -80px;
+             font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <section class="form-dk">
+        <div class="container d-flex justify-content-center">
+            <form id="formRegister" style="width: 400px;">
+                <h3 class="text-center">Đăng Ký Tài Khoản</h3>
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Họ và tên</label>
+                    <input type="text" class="form-control" id="userName" placeholder="Vui lòng nhập họ và tên">
+                    <div id="userNameError" style="color: red; display: none;">Không được bỏ trống</div>
+                  </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên Đăng Nhập</label>
+                    <input type="text" class="form-control" id="username" placeholder="Vui lòng nhập tên đăng nhập">
+                    <div id="usernameError" style="color: red; display: none;">Không được bỏ trống</div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Vui lòng email">
+                    <div id="emailError" style="color: red; display: none;">Không được bỏ trống</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật Khẩu</label>
+                    <input type="password" class="form-control" id="password" placeholder="Vui lòng nhập mật khẩu">
+                    <div id="passwordError" style="color: red; display: none;">Không được bỏ trống</div>
+                </div>
+                <div class="mb-3">
+                    <label for="repassword" class="form-label">Xác Nhận Mật Khẩu</label>
+                    <input type="password" class="form-control" id="repassword" placeholder="Vui lòng nhập lại mật khẩu">
+                    <div id="repasswordError" style="color: red; display: none;">Không được bỏ trống</div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="address" class="form-label">Địa chỉ</label>
+                    <textarea class="form-control" id="address" rows="3" placeholder="Vui lòng nhập địa chỉ"></textarea>
+                </div> -->
+                <input type="submit" value="Đăng Ký" class="form-submit">
+                <p class="text-center mt-2"">Bạn đã có tài khoản? <a href="dangnhap.html">Đăng Nhập</a></p>
+            </form>
+        </div>
+    </section>
+    <!-- Script -->
+    <script src="./js/register.js"></script>
+</body>
+</html>

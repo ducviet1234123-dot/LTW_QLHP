@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi-vn">
+<head>
+    <title>Liên Hệ - Titan Gym</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Titan Gym - Không gian tập luyện hiện đại, chuyên nghiệp. Tham gia ngay!">
+    <link href="images/logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+<style>
+    html{
+        width: 1024px;
+        margin: auto;
+    }
+    fieldset{
+        width: 80%;
+        margin: 20px auto;
+        font-weight: bold;
+    }
+    table{
+        margin: auto;
+        width: 60% ; 
+    }
+</style>
+</head>
+<body>
+    <form action="#" method="post" enctype="application/x-www-form-urlencoded">
+    <header class="main-header" style="position: relative;">
+        <div class="container">
+            <a href="trangchu.html" class="logo-link">
+                <img src="images/logo.png" id="logo" alt="Logo Titan Gym">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                  <li><a href="trangchu.html">Trang Chủ</a></li>
+                  <li><a href="gioithieu.html">Giới Thiệu</a></li>
+                  <li><a href="sanpham.html">Sản Phẩm</a></li> 
+                  <li><a href="dangnhap.html">Đăng Nhập</a></li>
+                  <li><a href="lienhe.html">Liên Hệ</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="search" id="search" placeholder="Tìm kiếm..." />
+                    <span class="search-icon"><i class="fa fa-search"></i></span>
+                    <a href="cart.html" class="shopping-cart-icon">
+                        <span class="cart-count">0</span>
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>
+                </div>
+                <a href="dangky.html" class="btn btn-primary">Tham Gia Ngay</a>
+            </div>
+            <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+        <section class="hero-section" style="background-image: url(images/background-phong-gym_035832400.jpg);">
+            <div>
+                <h1>LIÊN HỆ VỚI TITAN GYM NGAY</h1><br>
+                <h3 style="margin-bottom: 20px;">Liên hệ trực tiếp qua địa chỉ : 73D Võ Văn Kiệt, Ninh Kiều, Cần Thơ</h3>               
+            </div>
+        </section>           
+    </header>
+<main>
+    <h3 class="section-title">Bạn Muốn Tìm Hiểu Thêm Thông Tin? <br>
+        Hãy Để Lại Thông Tin Của Bạn</h3>
+        <section>
+            <fieldset>
+                <legend style="margin-left: 30px; font-size: 25px;"><b>Thông tin của bạn</b></legend>
+                <table>
+                    <tr>
+                        <td><b><label for="hoten">Họ Tên:</label></b></td>
+                        <td><input type="text" id="hoten" name="hoten" placeholder="Vui lòng nhập Họ tên của bạn"></td>
+                    </tr>
+                    <tr>
+                        <td><b><label for="sdt">Số điện thoại:</label></b></td>
+                        <td><input type="text" id="sdt" name="sdt" placeholder="Vui lòng nhập số điện thoại"></td>
+                    </tr>
+                    <tr>
+                        <td><b><label for="chude">Chủ đề</label></b></td>
+                        <td><select name="chude" id="chude" size="1"><option value="Về Sản Phẩm/ Dịch Vụ">Về Sản Phẩm/ Dịch Vụ</option> <option value="Về Ưu Đãi Thẻ Thành Viên">Về Ưu Đãi Thẻ Thành Viên</option> <option value="Về Thông Tin Khác">Về Thông Tin Khác</option></select></td>
+                    </tr>
+                    <tr><td><b><label for="Nội dung">Nội dung</label></b></td></tr>
+                    <tr>
+                        <td colspan="2"><textarea name="Nội dung" id="Nội dung" rows="7" cols="50" placeholder="Nội dung cần liên hệ"></textarea></td>
+                    </tr>
+                    <tr><td></td><td colspan="2"><input type="submit" value="Gửi" ></td></tr>
+                </table>
+            </fieldset>
+        </section>
+</main>
+
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Ngăn chặn gửi biểu mẫu ngay lập tức
+        Swal.fire({
+            title: "Thành công!",
+            text: "Thông tin của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ sớm nhất.",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+        this.reset(); // Xóa nội dung biểu mẫu sau khi gửi
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+<footer class="main-footer" style="background-color: #333; color: #ccc; padding: 30px 0; text-align: center;">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h4>Titan Gym</h4>
+                <p>73D Võ Văn Kiệt, Ninh Kiều, Cần Thơ</p>
+                <p>Điện thoại: <a href="tel:0903298458" style="color: #ccc;">0903 298 458</a></p>
+            </div>
+            <div class="footer-links">
+                <h4>Liên Kết</h4>
+                <ul>
+                    <li><a href="gioithieu.html">Về Chúng Tôi</a></li>
+                    <li><a href="dichvu_lop_hoc.html">Dịch Vụ</a></li>
+                    <li><a href="lienhe.html">Liên Hệ</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Kết Nối</h4>
+                <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+        <div class="footer-bottom">
+            <p>© <span id="current-year">2025</span> Bản quyền thuộc về Titan Gym.</p>
+            <a href="#logo" class="back-to-top" style="color: #ccc; font-size: 1.2em; display: inline-block; margin-top: 10px;"><i class="fas fa-arrow-up"></i></a>
+        </div>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi-vn">
+<head>
+    <title>Trang Chủ - Titan Gym</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Titan Gym - Không gian tập luyện hiện đại, chuyên nghiệp. Tham gia ngay!">
+    <link href="images/gym_favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="./css/main.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="trangchu_gym.html" class="logo-link">
+                <img src="images/logo.png" id="logo" alt="Logo Titan Gym">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                  <li><a href="trangchu.html">Trang Chủ</a></li>
+                  <li><a href="gioithieu.html">Giới Thiệu</a></li>
+                  <li><a href="sanpham.html">Sản Phẩm</a></li> 
+                  <li><a href="dangnhap.html">Đăng Nhập</a></li>
+                  <li><a href="lienhe.html">Liên Hệ</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="search" id="search" placeholder="Tìm kiếm..." />
+                    <span class="search-icon"><i class="fa fa-search"></i></span>
+                    <span class="shopping-cart-icon">  
+                      <span class="cart-count">0</span>
+                      <i class="fa fa-shopping-cart"></i>
+                    </span>
+                </div>
+                <a href="dangky.html" class="btn btn-primary">Tham Gia Ngay</a>
+            </div>
+            <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+          <div class="cart-container">
+            <div class="cart-part">
+              <div class="cart-img">
+                <img src="./images/img-1.jpg" alt="" />
+              </div>
+              <div class="cart-desc">
+                <h3>miếng lót tập luyện</h3>
+              </div>
+              <div class="cart-quantity">
+                <input type="number" id="quantity" min="0" />
+              </div>
+              <div class="cart-price">
+                <h4>8700000</h4>
+              </div>
+              <div class="cart-total">
+                <h4>8700000</h4>
+              </div>
+              <div class="cart-remove">
+                <button>Xóa sản phẩm</button>
+              </div>
+            </div>
+          </div>
+  
+          <div class="cart-summary">
+            <div class="product-total">
+              <h2>total product: <span id="total">$10000</span></h2>
+            </div>
+            <div class="product-checkout">
+              <a href="#" class="checkout">Payment</a>
+            </div>
+            <button class="removeAll">Clear cart</button>
+          </div>
+        </div>
+      </main>
+
+   
+
+    <footer class="main-footer" style="background-color: #333; color: #ccc; padding: 30px 0; text-align: center;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h4>Titan Gym</h4>
+                    <p>73D Võ Văn Kiệt, Ninh Kiều, Cần Thơ</p>
+                    <p>Điện thoại: <a href="tel:0903298458" style="color: #ccc;">0903 298 458</a></p>
+                </div>
+                <div class="footer-links">
+                    <h4>Liên Kết</h4>
+                    <ul>
+                        <li><a href="gioithieu.html">Về Chúng Tôi</a></li>
+                        <li><a href="dichvu_lop_hoc.html">Dịch Vụ</a></li>
+                        <li><a href="lienhe.html">Liên Hệ</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Kết Nối</h4>
+                    <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+            <div class="footer-bottom">
+                <p>© <span id="current-year">2025</span> Bản quyền thuộc về Titan Gym.</p>
+                <a href="#logo" class="back-to-top" style="color: #ccc; font-size: 1.2em; display: inline-block; margin-top: 10px;"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+</body>
+</html>
