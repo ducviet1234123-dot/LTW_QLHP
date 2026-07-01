@@ -27,7 +27,7 @@
 
             <li><a href="index.php">Trang chủ</a></li>
 
-            <li class="dropdown">
+            <li class="dropdown">   
                 <a href="khoahoc.php">
                     Khóa học
                     <i class="fa-solid fa-chevron-down"></i>
