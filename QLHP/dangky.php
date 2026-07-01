@@ -10,6 +10,7 @@
     <input type="password" placeholder="Mật khẩu"><br><br>
 
     <button>Đăng ký</button>
+    <button style="color: aqua;"> hihi</button>
 </form>
 
 <?php include 'footer.php'; ?>
