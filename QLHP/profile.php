@@ -14,8 +14,7 @@ $user = $_SESSION["user"];  }
 <h2>Thông tin cá nhân</h2>
 <p>Họ tên: <?= $user["name"] ?></p>
 <p>Email: <?= $user["email"] ?></p>
-<p>Năm sinh: <?= $user["year"] ?></p>
-<p>Giới tính: <?= $user["gender"] ?></p>
+<p>Năm sinh: <?= $user["year of birth"] ?></p>
 <a href="update.php">Cập nhật thông tin</a> |
 <a href="Dangxuat.php">Đăng xuất</a>
 <?php include("footer.php"); ?>   

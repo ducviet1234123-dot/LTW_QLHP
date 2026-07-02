@@ -92,8 +92,7 @@ fieldset{
     align-items: center;
     margin: 5px 10px;
 }
-.row input, nav {
-    display: flex;
+.row input {
     grid-column: 2/3;
     width: 80%;
     text-align: left;
@@ -101,10 +100,6 @@ fieldset{
     box-sizing: border-box;
     text-decoration: none;
     font-weight: bold;
-}
-.row nav input[type="radio"] {
-    margin-right: 5px;   
-    margin-left: 10px;   
 }
 .row label {
     grid-column: 1/2;

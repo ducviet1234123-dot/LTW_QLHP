@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once("mysqlConnect.php");
 if (!isset($_SESSION["user"])) {
-  header("Location: Dangnhap.php");
+  header("Location: dangnhap.php");
   exit();
 }
 
@@ -15,17 +15,15 @@ $user = $_SESSION["user"];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $year = $_POST["year"];
-    $gender = $_POST["gender"];
     $email = $user["email"];
 
-    $thongtin = $mysqli->prepare("UPDATE users SET name=?, year=?, gender=? WHERE email=?");
-    $thongtin->bind_param("siss", $name, $year, $gender, $email);
+    $thongtin = $mysqli->prepare("UPDATE nguoidung SET `name`=?, `year of birth`=? WHERE email=?");
+    $thongtin->bind_param("sis", $name, $year, $email);
     $thongtin->execute();
 
     //Cap nhat session
     $_SESSION["user"]["name"] = $name;
-    $_SESSION["user"]["year"] = $year;
-    $_SESSION["user"]["gender"] = $gender;
+    $_SESSION["user"]["year of birth"] = $year;
 
     header("Location: profile.php");
     exit();
@@ -52,18 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php
         $nowYear = date("Y");
         for($y = $nowYear; $y >= 1920; $y--){
-            $sel = ($y == $user["year"]) ? "selected" : "";
+            $sel = ($y == $user["year of birth"]) ? "selected" : "";
             echo "<option $sel>$y</option>";
         }
         ?>
     </select><br>
-    </div>
-    <div class="row">
-        <label for="gender">Giới tính:</label>
-        <nav>
-            <input style="width:50%" type="radio" name="gender" value="male">Nam
-            <input style="width:50%" type="radio" name="gender" value="female">Nữ
-        </nav>
     </div>
     <div style="text-align: center; margin :15px">
         <button type="submit">Cập nhật</button>

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $pass = sha1($_POST["pass"]);
 
-    $thongtin = $mysqli->prepare("SELECT * FROM users WHERE email=? AND password=?");
+    $thongtin = $mysqli->prepare("SELECT * FROM nguoidung WHERE email=? AND password=?");
     $thongtin->bind_param("ss", $email, $pass);
     $thongtin->execute();
     $kq = $thongtin->get_result();  //$kq giống như 1 “bảng dữ liệu tạm”

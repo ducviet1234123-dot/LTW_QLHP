@@ -8,10 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $pass = sha1($_POST["pass"]);
     $year = $_POST["year"];
-    $gender = $_POST["gender"];
 
-    $thongtin = $mysqli->prepare("INSERT INTO users VALUES (?,?,?,?,?)");
-    $thongtin->bind_param("sssis", $email, $name, $pass, $year, $gender);
+    $thongtin = $mysqli->prepare("INSERT INTO `nguoidung` (`name`, `email`, `password`, `year of birth`) VALUES (?, ?, ?, ?)");
+    $thongtin->bind_param("sssi", $name, $email, $pass, $year);
     if ($thongtin->execute())
         echo "<script>alert('Đăng ký thành thông');</script>";
     else
@@ -46,13 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             ?>
             </select>
-        </div>
-        <div class="row" style="margin-top: 15px;">
-            <label for="gender">Giới tính:</label>
-            <nav>
-                <input style="width:5%" type="radio" name="gender" value="male">Nam
-                <input style="width:5%" type="radio" name="gender" value="female">Nữ
-            </nav>
         </div>
         <div style="text-align: center; margin :15px">
             <button type="submit" value="addMenber">Đăng ký</button>
