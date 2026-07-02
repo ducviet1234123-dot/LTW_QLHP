@@ -83,7 +83,7 @@ nav ul li a:hover{
 /* Account */
 fieldset{
     margin: auto;
-    width: max-content;
+    width: fit-content;
 }
 .row{
     display: grid;
@@ -92,7 +92,8 @@ fieldset{
     margin-top: 5px;
 }
 .row input {
-    width: 75%;
+    grid-column: 2/3;
+    width: 100%;
     text-align: left;
     padding: 4px;
     box-sizing: border-box;
@@ -100,6 +101,7 @@ fieldset{
     font-weight: bold;
 }
 .row label {
+    grid-column: 1/2;
     text-align: right;
     margin-right: 10px;
     font-weight: bolder;
