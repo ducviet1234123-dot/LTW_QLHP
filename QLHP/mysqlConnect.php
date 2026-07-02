@@ -11,5 +11,4 @@ if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 $mysqli->set_charset("utf8");
-// KHÔNG cần chọn database ở đây, vì các file create_book.php và view_book.php đã tự gọi $mysqli->select_db("bookstore");
 ?>

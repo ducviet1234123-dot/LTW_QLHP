@@ -3,7 +3,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once("mysqlConnect_3.php");
+require_once("mysqlConnect.php");
 if (!isset($_SESSION["user"])) {
   header("Location: Dangnhap.php");
   exit();
