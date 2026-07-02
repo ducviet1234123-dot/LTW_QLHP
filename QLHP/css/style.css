@@ -45,14 +45,11 @@ nav ul{
     gap:40px;
 }
 
-nav ul li{
-    position:relative;
-}
-
 nav ul li a{
     color:#002b45;
     font-weight:600;
     transition:.3s;
+    position:relative;
 }
 
 nav ul li a:hover{
