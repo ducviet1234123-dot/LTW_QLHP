@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="row">
         <label for="email">Email:</label>
-        <?= $user["email"] ?><br>
+        <nav><?= $user["email"] ?><br></nav>
     </div>
     <div class="row">
         <label for="name">Họ tên:</label>
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="row">
         <label for="year">Năm sinh:</label>
-        <select style="width:15%" name="year">
+        <select style="width:30%" name="year">
         <?php
         $nowYear = date("Y");
         for($y = $nowYear; $y >= 1920; $y--){
@@ -60,10 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="row">
         <label for="gender">Giới tính:</label>
-        <div>
-            <input type="radio" name="gender" value="Nam" <?= $user["gender"]=="Nam"?"checked":"" ?>>Nam
-            <input type="radio" name="gender" value="Nữ" <?= $user["gender"]=="Nữ"?"checked":"" ?>>Nữ <br>
-        </div>
+        <nav>
+            <input style="width:50%" type="radio" name="gender" value="male">Nam
+            <input style="width:50%" type="radio" name="gender" value="female">Nữ
+        </nav>
     </div>
     <div style="text-align: center; margin :15px">
         <button type="submit">Cập nhật</button>

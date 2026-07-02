@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <title>Dang nhap</title>
 <form method="POST">
   <fieldset>
-    <div style="text-align: center; color: blue">
+    <div style="text-align: center; color: black">
         <h1>Đăng nhập</h1>
     </div>
     <div class="row">
@@ -44,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div style="text-align: center; margin :5px">
         <button type="submit">Đăng nhập</button> <br>
     </div>  <hr>
-    <nav style="float: right; font-style:italic;">
+    <div style="float: right; font-style:italic;">
     chưa có tài khoản? hãy <a style="text-decoration: none;font-weight: bold;" href="Dangky.php">Đăng ký</a>
-    </nav>
+</div>
   </fieldset>
 </form>
 <?php include("footer.php"); ?>
