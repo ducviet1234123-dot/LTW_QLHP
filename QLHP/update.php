@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/style.css">
 <?php include("header.php"); ?>
 <?php
 if (session_status() === PHP_SESSION_NONE) {
@@ -32,28 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
     <title>Cap nhat thong tin</title>
-<style>
-        fieldset{
-            margin: auto;
-            width: 600px;
-        }
-        .row{
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            align-items: center;
-            margin-top: 5px;
-        }
-        label {
-            text-align: right;
-            margin-right: 10px;
-            font-weight: bolder;
-        }
-        input {
-            text-align: left;
-            padding: 4px;
-            box-sizing: border-box;
-        }
-</style>
 <form method="POST">
   <fieldset>
     <div style="text-align: center; color: blue">

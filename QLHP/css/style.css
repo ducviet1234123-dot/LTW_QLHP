@@ -1,5 +1,5 @@
 *{
-    margin:0;
+    margin:auto;
     padding:0;
     box-sizing:border-box;
     font-family:Arial, Helvetica, sans-serif;
@@ -84,6 +84,29 @@ nav ul li a:hover{
 }
 
 /* Account */
+fieldset{
+    margin: auto;
+    width: max-content;
+}
+.row{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    margin-top: 5px;
+}
+.row input {
+    width: 75%;
+    text-align: left;
+    padding: 4px;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: bold;
+}
+.row label {
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bolder;
+}
 
 .account{
     display:flex;
