@@ -7,8 +7,4 @@
   
 </p>
 
-
-
-
-
 <?php include 'footer.html'; ?>
