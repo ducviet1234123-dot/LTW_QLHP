@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/style.css">
 <?php
-include("header.php");
+include("header.html");
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($row = $kq->fetch_assoc()) {    //fetch_assoc() lấy 1 dòng dữ liệu đầu tiên từ $kq
         $_SESSION["user"] = $row;
-        header("Location: profile.php");
+        header("Location: index.html");
         exit();
     } else echo "<script>alert('Sai email hoặc mật khẩu');</script>";
 }
@@ -49,4 +49,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
   </fieldset>
 </form>
-<?php include("footer.php"); ?>
+<?php include("footer.html"); ?>

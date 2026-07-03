@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/style.css">
-<?php include("header.php"); ?>
+<?php include("header.html"); ?>
 <?php
 require_once("mysqlConnect.php");
 
@@ -55,4 +55,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </fieldset>
 </form>
-<?php include("footer.php"); ?>
+<?php include("footer.html"); ?>

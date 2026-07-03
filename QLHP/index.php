@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'header.html'; ?>
 
 <h1>Trang chủ</h1>
 
@@ -6,4 +6,4 @@
     Đây là nội dung trang chủ.
 </p>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer.html'; ?>
