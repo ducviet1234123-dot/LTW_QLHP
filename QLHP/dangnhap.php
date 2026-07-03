@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($row = $kq->fetch_assoc()) {    //fetch_assoc() lấy 1 dòng dữ liệu đầu tiên từ $kq
         $_SESSION["user"] = $row;
-        header("Location: profile.php");
+        header("Location: index.php");
         exit();
     } else echo "<script>alert('Sai email hoặc mật khẩu');</script>";
 }
