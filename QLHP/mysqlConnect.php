@@ -1,10 +1,10 @@
 <?php
-$hostname = "localhost"; // Ví dụ: "localhost"
-$username = "root"; // Ví dụ: "root"
-$password = ""; // Ví dụ: "" (mật khẩu rỗng)
-$localhost = "khoahoc";
+$hostname = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$database = "DK";
 
-$mysqli = new mysqli($hostname, $username, $password, $localhost);
+$mysqli = new mysqli($hostname, $username, $password, $database);
 
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
