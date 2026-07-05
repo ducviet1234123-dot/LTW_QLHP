@@ -1,4 +1,4 @@
-<?php include 'header.html'; ?>
+<?php include 'header.php'; ?>
 
 <section class="hero">
     <h2>Trải nghiệm học IELTS chuẩn quốc tế</h2>

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/style.css">
 <?php
-include("header.html");
+include("header.php");
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

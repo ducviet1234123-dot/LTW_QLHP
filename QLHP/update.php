@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/style.css">
-<?php include("header.html"); ?>
+<?php include("header.php"); ?>
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

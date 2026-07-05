@@ -10,6 +10,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body>
@@ -45,19 +46,27 @@
 
         </ul>
     </nav>
-
     <div class="account">
-
-        <a class="login" href="dangnhap.php">
-            Đăng nhập
-        </a>
-
-        <a class="register" href="dangky.php">
-            Đăng ký
-        </a>
-
+        <?php 
+            if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+            }
+            if(isset($_SESSION['user'])){
+                $user = $_SESSION["user"];
+                echo '<p>' . htmlspecialchars($user["name"]) . '</p>';
+                echo '<a href="profile.php" class="profile-icon"><i class="fa-solid fa-user"></i></a>';
+            }else{    
+                echo'
+                    <a class="login" href="dangnhap.php">
+                        Đăng nhập
+                    </a>
+                    <a class="register" href="dangky.php">
+                        Đăng ký
+                    </a>
+                ';
+            }
+        ?>
     </div>
-
 </header>
 
 <main>

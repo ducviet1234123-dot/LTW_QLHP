@@ -85,20 +85,20 @@ fieldset{
     margin: auto;
     width: max-content;
     padding: 5px;
+    width: 60%;
 }
 .row{
     display: grid;
     grid-template-columns: 150px 1fr;
-    align-items: center;
     margin: 5px 10px;
+    width: 80%s;
 }
 .row input {
     grid-column: 2/3;
-    width: 80%;
+    width: 50%;
     text-align: left;
     padding: 4px;
     box-sizing: border-box;
-    text-decoration: none;
     font-weight: bold;
 }
 .row label {

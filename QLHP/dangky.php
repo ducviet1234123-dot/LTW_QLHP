@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/style.css">
-<?php include("header.html"); ?>
+<?php include("header.php"); ?>
 <?php
 require_once("mysqlConnect.php");
 
@@ -25,15 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="row">
             <label for="name">Họ tên:</label>
-            <input type="text" name="name"> <br>
+            <input type="text" name="name" placeholder="Điền họ tên"> <br>
         </div>
         <div class="row">
             <label for="email">Địa chỉ Email:</label>
-            <input type="email" name="email"> <br>
+            <input type="email" name="email" placeholder="Điền email"> <br>
         </div>
         <div class="row">
             <label for="pass">Mật khẩu:</label>
-            <input type="password" name="pass"> <br>
+            <input type="password" name="pass" placeholder="Điền mật khẩu"> <br>
         </div>
         <div class="row">
             <label for="year">Năm sinh:</label>

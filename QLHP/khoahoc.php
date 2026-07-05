@@ -1,4 +1,4 @@
-<?php include 'header.html'; ?>
+<?php include 'header.php'; ?>
 
 <h1>Khóa học</h1>
 
