@@ -1,4 +1,4 @@
-<?php include("header.php"); ?>   
+<?php include("header.html"); ?>   
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -17,4 +17,4 @@ $user = $_SESSION["user"];  }
 <p>Năm sinh: <?= $user["year of birth"] ?></p>
 <a href="update.php">Cập nhật thông tin</a> |
 <a href="Dangxuat.php">Đăng xuất</a>
-<?php include("footer.php"); ?>   
+<?php include("footer.html"); ?>   

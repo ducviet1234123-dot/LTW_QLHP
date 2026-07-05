@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/style.css">
-<?php include("header.php"); ?>
+<?php include("header.html"); ?>
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -61,4 +61,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </fieldset>
 </form>
-<?php include("footer.php"); ?>   
+<?php include("footer.html"); ?>   
