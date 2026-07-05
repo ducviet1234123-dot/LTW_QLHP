@@ -29,6 +29,13 @@ header{
     box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
+fieldset{
+    margin: auto;
+    width: max-content;
+    padding: 5px;
+    width: 60%;
+}
+
 .logo h1{
     color:#0f1d3d;
     font-size:38px;
@@ -57,36 +64,76 @@ nav ul li a:hover{
 }
 
 /* Dropdown */
-
-.submenu{
-    position:absolute;
-    top:35px;
-    left:0;
-    width:180px;
-    background:#fff;
-    display:none;
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-.submenu li{
-    padding:12px;
+/* Định dạng chung cho menu con xổ xuống của profile và khoá học */
+.dropdown .submenu {
+    display: none;                      
+    position: absolute;
+    top: 100%;
+    background-color: #474444;
+    min-width: 200px;
+    padding: 10px 0;
+    list-style: none;
+    border-radius: 6px;                   
+    z-index: 1000;
 }
 
-.submenu li:hover{
-    background:#f5f5f5;
+.profile-dropdown .profile-menu {
+    left: auto;
+    right: 0;
+    font-weight: bold;
 }
 
-.dropdown:hover .submenu{
-    display:block;
+/* HIỆU ỨNG HOVER ĐỒNG NHẤT: Rê chuột vào .dropdown thì hiển thị .submenu */
+.dropdown:hover .submenu {
+    display: block;
 }
 
-/* Account */
-fieldset{
-    margin: auto;
-    width: max-content;
+/* Định dạng các thẻ chứa liên kết bên trong menu con */
+.submenu li a {
+    color: #e8dfdf;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;             
+    font-size: 14px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.submenu li a:hover {
+    background-color: #f5f5f5;
+    color: #4b208c;                        
+}
+
+
+/* --- ĐỊNH DẠNG RIÊNG CHO PHẦN TÀI KHOẢN --- */
+.profile-btn {
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
     padding: 5px;
-    width: 60%;
+    display: flex;
+    align-items: center;
 }
+
+.profile-menu .divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 5px 0;
+}
+/* phần logout */
+.profile-menu li a.logout-item {
+    color: #e53935;
+}   
+.profile-menu li a.logout-item:hover {
+    background-color: #ffebee;
+}
+
 .row{
     display: grid;
     grid-template-columns: 150px 1fr;
