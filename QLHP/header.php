@@ -26,8 +26,8 @@
         <ul>
             <li><a href="index.php">Trang chủ</a></li>
 
-            <!-- Dropdown Khóa học -->
-            <li class="dropdown">   
+            <!-- Dromysqliwn Khóa học -->
+            <li class="dromysqliwn">   
                 <a href="khoahoc.php">
                     Khóa học
                     <i class="fa-solid fa-chevron-down"></i>
@@ -49,7 +49,7 @@
                 $user = $_SESSION["user"];
                 echo '<p>' . htmlspecialchars($user["name"]) . '</p>';
                 echo '
-                <div class="dropdown profile-dropdown">
+                <div class="dromysqliwn profile-dromysqliwn">
                     <a href="#" class="profile-btn">
                         <i class="fa-solid fa-user"></i>
                     </a>
