@@ -8,7 +8,7 @@
  *   $_SESSION['user_id']  = ID của NguoiDung sau khi đăng nhập
  *   $_SESSION['username'] = TenDangNhap để hiển thị lời chào
  */
-require_once 'config.php';
+require_once 'mysqlConnect.php';
 
 $is_logged_in = isset($_SESSION['user_id']);
 

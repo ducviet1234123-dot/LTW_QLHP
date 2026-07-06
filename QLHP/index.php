@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +6,8 @@
     <title>Trang chủ</title>
 </head>
 <body>
-    <h2>Hello World</h2>
 </body>
 </html>
-=======
 <?php include 'header.php'; ?>
 
 <section class="hero">
