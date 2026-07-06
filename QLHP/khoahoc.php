@@ -18,23 +18,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enrol
         $ma_kh = $_POST['course_id'] ?? '';
 
         try {
-            // Bổ sung: Kiểm tra xem khóa học này thực sự có tồn tại hay không
+            // Sửa MySQLi: Kiểm tra xem khóa học này thực sự có tồn tại hay không
             $check_course = $mysqli->prepare("SELECT 1 FROM khoahoc WHERE MaKH = ?");
-            $check_course->execute([$ma_kh]);
+            $check_course->bind_param("s", $ma_kh);
+            $check_course->execute();
+            $check_course->store_result();
             
-            if (!$check_course->fetch()) {
+            if ($check_course->num_rows === 0) {
                 $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Khóa học không tồn tại.'];
             } else {
-                // Đồng nhất tên bảng DangKyKhoaHoc hoặc dangkykhoahoc tùy CSDL của bạn
+                // Sửa MySQLi: Chuẩn hóa câu lệnh INSERT
                 $stmt = $mysqli->prepare(
                     "INSERT INTO DangKyKhoaHoc (ID_NguoiDung, ID_KhoaHoc) VALUES (?, ?)"
                 );
-                $stmt->execute([$_SESSION['user_id'], $ma_kh]);
+                $stmt->bind_param("is", $_SESSION['user_id'], $ma_kh);
+                $stmt->execute();
+                
                 $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký khóa học thành công!'];
             }
-        } catch (mysqliException $e) {
-            // Mã lỗi 23000 = vi phạm UNIQUE KEY (đã đăng ký khóa này rồi)
-            if ($e->getCode() == 23000) {
+            $check_course->close();
+            if (isset($stmt)) $stmt->close();
+
+        } catch (mysqli_sql_exception $e) { // Sửa tên Exception chuẩn của MySQLi
+            // Mã lỗi 1062 trong MySQL = vi phạm UNIQUE KEY (đã đăng ký khóa này rồi)
+            if ($e->getCode() == 1062) {
                 $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
             } else {
                 $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Có lỗi xảy ra, vui lòng thử lại.'];
@@ -53,9 +60,9 @@ unset($_SESSION['flash']);
 // ---------------------------------------------------------------
 // 2. LẤY DANH SÁCH KHÓA HỌC TỪ CSDL, NHÓM THEO DANH MỤC
 // ---------------------------------------------------------------
-// Sử dụng chữ thường 'khoahoc' để đồng nhất
-$stmt = $mysqli->query("SELECT * FROM khoahoc ORDER BY DanhMuc, ThuTu ASC");
-$all_courses = $stmt->fetchAll();
+$result = $mysqli->query("SELECT * FROM khoahoc ORDER BY DanhMuc, ThuTu ASC");
+// Thay thế fetchAll() bằng cú pháp fetch_all của MySQLi
+$all_courses = $result->fetch_all(MYSQLI_ASSOC);
 
 $courses = [];
 foreach ($all_courses as $c) {
@@ -67,7 +74,6 @@ foreach ($all_courses as $c) {
 // ---------------------------------------------------------------
 $registered = [];
 if ($is_logged_in) {
-    // SỬA LỖI LOGIC: Đổi tên bảng từ 'KhoaHoc' viết hoa thành 'khoahoc' viết thường
     $stmt = $mysqli->prepare(
         "SELECT kh.*, dk.NgayDangKy
          FROM DangKyKhoaHoc dk
@@ -75,8 +81,13 @@ if ($is_logged_in) {
          WHERE dk.ID_NguoiDung = ?
          ORDER BY dk.NgayDangKy DESC"
     );
-    $stmt->execute([$_SESSION['user_id']]);
-    $registered = $stmt->fetchAll();
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    
+    // Thay thế fetchAll() bằng cách lấy result rồi fetch_all
+    $res = $stmt->get_result();
+    $registered = $res->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
 }
 // Tập hợp mã khóa học đã đăng ký để tô trạng thái "Đã đăng ký" trên các thẻ khóa học
 $registered_ids = array_column($registered, 'MaKH');
