@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+</head>
+<body>
+</body>
+</html>
 <?php include 'header.php'; ?>
 
 <section class="hero">
@@ -27,3 +37,4 @@
 </section>
 
 <?php include 'footer.html'; ?>
+>>>>>>> 320947ee75c9135a0a4703909c43e04f01aeed48

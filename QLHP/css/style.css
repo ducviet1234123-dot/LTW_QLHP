@@ -63,14 +63,14 @@ nav ul li a:hover{
     color:#ff3c3c;
 }
 
-/* Dropdown */
-.dropdown {
+/* Dromysqliwn */
+.dromysqliwn {
     position: relative;
     display: inline-block;
 }
 
 /* Định dạng chung cho menu con xổ xuống của profile và khoá học */
-.dropdown .submenu {
+.dromysqliwn .submenu {
     display: none;                      
     position: absolute;
     top: 100%;
@@ -82,14 +82,14 @@ nav ul li a:hover{
     z-index: 1000;
 }
 
-.profile-dropdown .profile-menu {
+.profile-dromysqliwn .profile-menu {
     left: auto;
     right: 0;
     font-weight: bold;
 }
 
-/* HIỆU ỨNG HOVER ĐỒNG NHẤT: Rê chuột vào .dropdown thì hiển thị .submenu */
-.dropdown:hover .submenu {
+/* HIỆU ỨNG HOVER ĐỒNG NHẤT: Rê chuột vào .dromysqliwn thì hiển thị .submenu */
+.dromysqliwn:hover .submenu {
     display: block;
 }
 
