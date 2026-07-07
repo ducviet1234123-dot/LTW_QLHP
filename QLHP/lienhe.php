@@ -8,8 +8,7 @@ if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$name = '';
-$email = '';
+
 
 if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
     $name = $_POST['name'];
