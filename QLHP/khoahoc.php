@@ -1,278 +1,200 @@
-<!DOCTYPE html>
-
+<link rel="stylesheet" href="css/style.css">
 <?php include 'header.php'; ?>
+
 <?php
-/**
- * khoahoc.php — Trang danh sách khóa học + đăng ký khóa học
- */
-require_once 'mysqlConnect.php';
+require_once('mysqlConnect.php');
 
-$is_logged_in = isset($_SESSION['user_id']);
-
-// ---------------------------------------------------------------
-// 1. XỬ LÝ ĐĂNG KÝ KHÓA HỌC (POST)
-// ---------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enroll') {
-
-    if (!$is_logged_in) {
-        $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Vui lòng đăng nhập trước khi đăng ký khóa học.'];
-    } else {
-        $ma_kh = $_POST['course_id'] ?? '';
-
-        try {
-            // Sửa MySQLi: Kiểm tra xem khóa học này thực sự có tồn tại hay không
-            $check_course = $mysqli->prepare("SELECT 1 FROM khoahoc WHERE MaKH = ?");
-            $check_course->bind_param("s", $ma_kh);
-            $check_course->execute();
-            $check_course->store_result();
-            
-            if ($check_course->num_rows === 0) {
-                $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Khóa học không tồn tại.'];
-            } else {
-                // Sửa MySQLi: Chuẩn hóa câu lệnh INSERT
-                $stmt = $mysqli->prepare(
-                    "INSERT INTO DangKyKhoaHoc (ID_NguoiDung, ID_KhoaHoc) VALUES (?, ?)"
-                );
-                $stmt->bind_param("is", $_SESSION['user_id'], $ma_kh);
-                $stmt->execute();
-                
-                $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký khóa học thành công!'];
-            }
-            $check_course->close();
-            if (isset($stmt)) $stmt->close();
-
-        } catch (mysqli_sql_exception $e) { // Sửa tên Exception chuẩn của MySQLi
-            // Mã lỗi 1062 trong MySQL = vi phạm UNIQUE KEY (đã đăng ký khóa này rồi)
-            if ($e->getCode() == 1062) {
-                $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
-            } else {
-                $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Có lỗi xảy ra, vui lòng thử lại.'];
-            }
-        }
-    }
-
-    header('Location: khoahoc.php');
-    exit();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
 }
 
-// Lấy thông báo flash (nếu có) rồi xóa khỏi session
+$is_logged_in     = isset($_SESSION['user']);
+$current_user_id  = $_SESSION['user']['id'] ?? null;
+
+// 1. XỬ LÝ ĐĂNG KÝ KHÓA HỌC (POST) — dùng mẫu Post/Redirect/Get
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enroll') {
+
+  if (!$is_logged_in) {
+    $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Vui lòng đăng nhập trước khi đăng ký khóa học.'];
+  } else {
+    $ma_kh        = $_POST['course_id']     ?? '';
+    $ma_giao_dich = trim($_POST['ma_giao_dich'] ?? '');
+    $so_tien      = $_POST['so_tien'] ?? 0;
+
+    $stmt = $mysqli->prepare(
+      "INSERT INTO dangkykhoahoc (id_nguoidung, id_khoahoc, ma_giao_dich, so_tien)
+             VALUES (?, ?, ?, ?)"
+    );
+    $stmt->bind_param("isss", $current_user_id, $ma_kh, $ma_giao_dich, $so_tien);
+
+    if ($stmt->execute()) {
+      $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký thành công! Chúng tôi sẽ xác nhận thanh toán trong thời gian sớm nhất.'];
+    } elseif ($mysqli->errno === 1062) {
+      $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
+    } else {
+      $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Có lỗi xảy ra, vui lòng thử lại.'];
+    }
+    $stmt->close();
+  }
+
+  header('Location: khoahoc.php');
+  exit();
+}
+
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
-// ---------------------------------------------------------------
 // 2. LẤY DANH SÁCH KHÓA HỌC TỪ CSDL, NHÓM THEO DANH MỤC
-// ---------------------------------------------------------------
-$result = $mysqli->query("SELECT * FROM khoahoc ORDER BY DanhMuc, ThuTu ASC");
-// Thay thế fetchAll() bằng cú pháp fetch_all của MySQLi
-$all_courses = $result->fetch_all(MYSQLI_ASSOC);
+$all_courses = [];
+$result = $mysqli->query("SELECT * FROM khoahoc ORDER BY danhmuc, thutu ASC");
+while ($row = $result->fetch_assoc()) {
+  $all_courses[] = $row;
+}
 
 $courses = [];
 foreach ($all_courses as $c) {
-    $courses[$c['DanhMuc']][] = $c;
+  $courses[$c['danhmuc']][] = $c;
 }
 
-// ---------------------------------------------------------------
 // 3. LẤY DANH SÁCH KHÓA HỌC ĐÃ ĐĂNG KÝ CỦA NGƯỜI DÙNG HIỆN TẠI
-// ---------------------------------------------------------------
 $registered = [];
 if ($is_logged_in) {
-    $stmt = $mysqli->prepare(
-        "SELECT kh.*, dk.NgayDangKy
-         FROM DangKyKhoaHoc dk
-         JOIN khoahoc kh ON dk.ID_KhoaHoc = kh.MaKH
-         WHERE dk.ID_NguoiDung = ?
-         ORDER BY dk.NgayDangKy DESC"
-    );
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    
-    // Thay thế fetchAll() bằng cách lấy result rồi fetch_all
-    $res = $stmt->get_result();
-    $registered = $res->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
+  $stmt = $mysqli->prepare(
+    "SELECT kh.*, dk.ngaydangky
+         FROM dangkykhoahoc dk
+         JOIN khoahoc kh ON dk.id_khoahoc = kh.makh
+         WHERE dk.id_nguoidung = ?
+         ORDER BY dk.ngaydangky DESC"
+  );
+  $stmt->bind_param("i", $current_user_id);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  while ($row = $res->fetch_assoc()) {
+    $registered[] = $row;
+  }
+  $stmt->close();
 }
-// Tập hợp mã khóa học đã đăng ký để tô trạng thái "Đã đăng ký" trên các thẻ khóa học
-$registered_ids = array_column($registered, 'MaKH');
+$registered_ids = array_column($registered, 'makh');
 
+$category_titles = [
+  'toeic'    => ['Lộ trình TOEIC', 'Dành cho người cần thi chứng chỉ 2 kỹ năng nghe đọc truyền thống.', 'grad-toeic'],
+  'ielts'    => ['Lộ trình IELTS', 'Chuẩn học thuật Academic quốc tế phục vụ du học, xét tuyển.', 'grad-ielts'],
+  'vstep'    => ['Lộ trình VSTEP', 'Định dạng đề thi đánh giá năng lực ngoại ngữ theo khung chuẩn VN.', 'grad-vstep'],
+  'cambridge' => ['Lộ trình Cambridge English', 'Chuẩn quốc tế với các chứng chỉ KET, PET, FCE, CAE, CPE.', 'grad-ielts'],
+  'giaotiep' => ['Tiếng Anh Giao Tiếp', 'Phát triển phản xạ nghe nói tự nhiên cho đời sống và công việc.', 'grad-giaotiep'],
+];
+
+$js_courses = $all_courses;
+foreach ($js_courses as &$c) {
+  $c['ketqua']  = json_decode($c['ketqua'], true)  ?: [];
+  $c['noidung'] = json_decode($c['noidung'], true) ?: [];
+}
+unset($c);
 ?>
-<html lang="vi">
 
-<head>
+<div class="khoahoc-toolbar">
+  <input type="text" id="searchInput" placeholder="Tìm khóa học TOEIC, IELTS, VSTEP...">
+</div>
 
-    <meta charset="UTF-8">
+<div class="khoahoc-container"
+  data-flash-type="<?php echo $flash ? htmlspecialchars($flash['type']) : ''; ?>"
+  data-flash-msg="<?php echo $flash ? htmlspecialchars($flash['msg']) : ''; ?>">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Danh sách khóa học · EngLab</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
-
-</head>
-
-<body data-flash-type="<?php echo $flash ? htmlspecialchars($flash['type']) : ''; ?>"
-
-      data-flash-msg="<?php echo $flash ? htmlspecialchars($flash['msg']) : ''; ?>">
-
-
-
-  <section class="hero">
-
-    <div class="hero-inner">
-
-      <span class="hero-eyebrow">CHỦ ĐỀ 5 · PHP &amp; MYSQL</span>
-
-      <h1 class="hero-title">Chọn lộ trình, đi đúng nhịp</h1>
-
-      <p class="hero-sub">Mỗi khối kỹ năng là một lộ trình gồm nhiều mốc, xếp từ nền tảng đến nâng cao — bạn đăng ký mốc nào phù hợp trình độ hiện tại là được.</p>
-
-    </div>
-
-  </section>
-
-
-
-  <main class="page-container">
-
-
-
-    <?php if ($is_logged_in && !empty($registered)): ?>
-
+  <?php if ($is_logged_in && !empty($registered)): ?>
     <section class="category my-courses">
-
       <div class="category-head">
-
         <h2>Khóa học của tôi</h2>
-
         <p>Danh sách khóa học bạn đã đăng ký, lấy trực tiếp từ CSDL.</p>
-
       </div>
-
       <div class="course-grid">
-
-        <?php foreach ($registered as $c): ?>
-
-            <div class="course-card enrolled">
-
-              <div class="card-media">
-
-                <span class="enrolled-badge">✓ Đã đăng ký</span>
-
-                <?php echo htmlspecialchars($c['TenKH']); ?>
-
-              </div>
-
-              <div class="card-body">
-
-                <h3><?php echo htmlspecialchars($c['TenKH']); ?></h3>
-
-                <div class="card-meta">
-
-                  <span class="card-teacher">GV: <?php echo htmlspecialchars($c['GiangVien']); ?></span>
-
-                  <span class="card-date"><?php echo date('d/m/Y', strtotime($c['NgayDangKy'])); ?></span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-        <?php endforeach; ?>
-
-      </div>
-
-    </section>
-
-    <?php endif; ?>
-
-
-
-    <?php foreach ($courses as $key => $course_list):
-
-        [$title, $desc, $gradClass] = $category_titles[$key] ?? [$key, '', 'grad-toeic'];
-
-    ?>
-
-    <section class="category" data-category="<?php echo htmlspecialchars($key); ?>">
-
-      <div class="category-head">
-
-        <h2><?php echo htmlspecialchars($title); ?></h2>
-
-        <p><?php echo htmlspecialchars($desc); ?></p>
-
-      </div>
-
-
-
-      <div class="roadmap">
-
-        <?php foreach ($course_list as $i => $course):
-
-            $is_registered = in_array($course['MaKH'], $registered_ids);
-
+        <?php foreach ($registered as $c):
+          $trangThaiText = match ($c['trang_thai']) {
+            'da_xac_nhan' => ['✓ Đã xác nhận', 'badge-confirmed'],
+            'huy'         => ['✕ Đã huỷ', 'badge-cancelled'],
+            default       => ['⏳ Chờ xác nhận', 'badge-pending'],
+          };
         ?>
-
-          <div class="roadmap-step">
-
-            <div class="step-node <?php echo $gradClass; ?>"><?php echo $i + 1; ?></div>
-
-            <div class="course-card <?php echo $is_registered ? 'is-registered' : ''; ?>"
-
-                 data-name="<?php echo htmlspecialchars(mb_strtolower($course['TenKH'])); ?>"
-
-                 onclick="toggleDetail('<?php echo htmlspecialchars($key); ?>', '<?php echo htmlspecialchars($course['MaKH']); ?>')">
-
-              <div class="card-media <?php echo $gradClass; ?>"><?php echo htmlspecialchars($course['TenKH']); ?></div>
-
-              <div class="card-body">
-
-                <h3><?php echo htmlspecialchars($course['TenKH']); ?></h3>
-
-                <div class="card-meta">
-
-                  <span class="card-students">👥 <?php echo number_format($course['SoHocVien']); ?> HV</span>
-
-                  <span class="card-price"><?php echo number_format($course['Gia']); ?>đ</span>
-
-                </div>
-
-                <?php if ($is_registered): ?>
-
-                  <span class="tag-registered">Đã đăng ký</span>
-
-                <?php endif; ?>
-
+          <div class="course-card enrolled">
+            <div class="card-media <?php echo empty($c['hinhanh']) ? '' : 'card-media-photo'; ?>">
+              <?php if (!empty($c['hinhanh'])): ?>
+                <img src="<?php echo htmlspecialchars($c['hinhanh']); ?>" alt="<?php echo htmlspecialchars($c['tenkh']); ?>">
+              <?php else: ?>
+                <?php echo htmlspecialchars($c['tenkh']); ?>
+              <?php endif; ?>
+              <span class="enrolled-badge <?php echo $trangThaiText[1]; ?>"><?php echo $trangThaiText[0]; ?></span>
+            </div>
+            <div class="card-body">
+              <h3><?php echo htmlspecialchars($c['tenkh']); ?></h3>
+              <div class="card-meta">
+                <span class="card-teacher">GV: <?php echo htmlspecialchars($c['giangvien']); ?></span>
+                <span class="card-date"><?php echo date('d/m/Y', strtotime($c['ngaydangky'])); ?></span>
               </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </section>
+  <?php endif; ?>
 
+  <?php foreach ($courses as $key => $course_list):
+    [$title, $desc, $gradClass] = $category_titles[$key] ?? [$key, '', 'grad-toeic'];
+  ?>
+    <section class="category" id="<?php echo htmlspecialchars($key); ?>" data-category="<?php echo htmlspecialchars($key); ?>">
+      <div class="category-head">
+        <h2><?php echo htmlspecialchars($title); ?></h2>
+        <p><?php echo htmlspecialchars($desc); ?></p>
+      </div>
+    <div class="roadmap">
+    <?php foreach ($course_list as $i => $course):
+      $is_registered = in_array($course['makh'], $registered_ids);
+      $panelId = $key . '-' . $course['makh'];
+    ?>
+      <!-- Bọc cặp card và panel trong cùng 1 khối course-item -->
+      <div class="course-item">
+          
+          <!-- Thẻ khóa học hiển thị -->
+          <div class="course-card <?php echo $is_registered ? 'is-registered' : ''; ?>"
+            data-name="<?php echo htmlspecialchars(mb_strtolower($course['tenkh'])); ?>"
+            onclick="toggleDetail('<?php echo htmlspecialchars($panelId); ?>', '<?php echo $course['makh']; ?>')">
+
+            <div class="card-media <?php echo empty($course['hinhanh']) ? $gradClass : 'card-media-photo'; ?>">
+              <?php if (!empty($course['hinhanh'])): ?>
+                <img src="<?php echo htmlspecialchars($course['hinhanh']); ?>" alt="<?php echo htmlspecialchars($course['tenkh']); ?>">
+              <?php else: ?>
+                <?php echo htmlspecialchars($course['tenkh']); ?>
+              <?php endif; ?>
             </div>
 
+            <div class="card-body">
+              <h3><?php echo htmlspecialchars($course['tenkh']); ?></h3>
+              <div class="card-meta">
+                <span class="card-students">👥 <?php echo number_format($course['sohocvien']); ?></span>
+                <span class="card-price"><?php echo number_format($course['gia']); ?>đ</span>
+              </div>
+              <?php if ($is_registered): ?>
+                <span class="tag-registered">Đã đăng ký</span>
+              <?php endif; ?>
+            </div>
           </div>
 
-        <?php endforeach; ?>
-
+          <!-- Bảng thông tin chi tiết -->
+          <div class="detail-panel" id="detail-<?php echo htmlspecialchars($panelId); ?>"></div>
+          
       </div>
-
-
-
-      <div class="detail-panel" id="detail-<?php echo htmlspecialchars($key); ?>" style="display: none;"></div>
-
-    </section>
-
     <?php endforeach; ?>
+  </div>
+    </section>
+  <?php endforeach; ?>
 
+</div>
 
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  </main>
+<script>
+  const ALL_COURSES = <?php echo json_encode($js_courses, JSON_UNESCAPED_UNICODE); ?>;
+  const IS_LOGGED_IN = <?php echo $is_logged_in ? 'true' : 'false'; ?>;
+  const REGISTERED_IDS = <?php echo json_encode($registered_ids, JSON_UNESCAPED_UNICODE); ?>;
+</script>
+<script src="script.js"></script>
 
-
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-</body>
-
-</html> 
-<?php include 'footer.html'; ?> 
-
+<?php include 'footer.html'; ?>

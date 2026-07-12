@@ -33,9 +33,11 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </a>
                 <ul class="submenu">
-                    <li><a href="#">IELTS</a></li>
-                    <li><a href="#">TOEIC</a></li>
-                    <li><a href="#">Tiếng Anh Giao Tiếp</a></li>
+                    <li><a href="khoahoc.php#ielts">IELTS</a></li>
+                    <li><a href="khoahoc.php#toeic">TOEIC</a></li>
+                    <li><a href="khoahoc.php#vstep">VSTEP</a></li>
+                    <li><a href="khoahoc.php#cambridge">Cambridge English</a></li>
+                    <li><a href="khoahoc.php#giaotiep">Tiếng Anh Giao Tiếp</a></li>
                 </ul>
             </li>
 
