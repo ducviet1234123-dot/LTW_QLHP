@@ -40,8 +40,19 @@
                     <li><a href="khoahoc.php#giaotiep">Tiếng Anh Giao Tiếp</a></li>
                 </ul>
             </li>
+            <?php 
+                if (isset($_SESSION['user'])) {
+                    $user = $_SESSION['user']; 
 
-            <li><a href="lienhe.php">Liên hệ</a></li>
+                    if (isset($user['name']) && $user['name'] === 'admin') {
+                        echo '<li><a href="xemlienhe.php">Xem liên hệ</a></li>';
+                    } else {
+                        echo '<li><a href="lienhe.php">Liên hệ</a></li>';
+                    }
+                } else {
+                    echo '<li><a href="lienhe.php">Liên hệ</a></li>';
+                }
+                ?>
         </ul>
     </nav>
 
