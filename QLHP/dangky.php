@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = sha1($_POST["pass"]);
     $year = $_POST["year"];
 
-    $thongtin = $mysqli->prepare("INSERT INTO `nguoidung` (`name`, `email`, `password`, `year of birth`) VALUES (?, ?, ?, ?)");
+    $thongtin = $mysqli->prepare("INSERT INTO `nguoidung` (`name`, `email`, `password`, `year_of_birth`) VALUES (?, ?, ?, ?)");
     $thongtin->bind_param("sssi", $name, $email, $pass, $year);
     if ($thongtin->execute())
         echo "<script>alert('Đăng ký thành thông');</script>";
