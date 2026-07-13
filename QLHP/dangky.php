@@ -11,9 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $thongtin = $mysqli->prepare("INSERT INTO `nguoidung` (`name`, `email`, `password`, `year_of_birth`) VALUES (?, ?, ?, ?)");
     $thongtin->bind_param("sssi", $name, $email, $pass, $year);
-    if ($thongtin->execute())
-        echo "<script>alert('Đăng ký thành thông');</script>";
-    else
+    if ($thongtin->execute()){
+        echo "<script>
+        alert('Đăng ký thành công!');
+        window.location.href = 'dangnhap.php';
+        </script>";
+    }else
         echo "<script>alert('Email đã tồn tại');</script>";
 }
 ?>

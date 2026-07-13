@@ -58,11 +58,17 @@
                     <ul class="submenu profile-menu">
                         <li><a href="profile.php"><i class="fa-regular fa-id-card"></i> Thông tin cá nhân</a></li>
                         <li><a href="khoahoc.php"><i class="fa-solid fa-book"></i> Khóa học hiện tại</a></li>
-                        <li><a href="update.php"><i class="fa-solid fa-pen-to-square"></i> Cập nhật thông tin</a></li>
+                        <li><a href="update.php"><i class="fa-solid fa-pen-to-square"></i> Cập nhật thông tin</a></li>';
+                    if ($user["name"] === 'admin') {
+                        echo '<li class="divider"></li>';
+                        echo '<li><a href="quantri.php" style="color: #e74c3c; font-weight: bold;"><i class="fa-solid fa-user-shield"></i> Trang Quản Trị</a></li>';
+                    }
+                    echo'
                         <li class="divider"></li>
                         <li><a href="Dangxuat.php" class="logout-item"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
                     </ul>
                 </div>
+                
                 ';
             } else {    
                 echo '
