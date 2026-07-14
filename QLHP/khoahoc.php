@@ -195,6 +195,6 @@ unset($c);
   const IS_LOGGED_IN = <?php echo $is_logged_in ? 'true' : 'false'; ?>;
   const REGISTERED_IDS = <?php echo json_encode($registered_ids, JSON_UNESCAPED_UNICODE); ?>;
 </script>
-<script src="script.js"></script>
+<script src="./js/script.js"></script>
 
 <?php include 'footer.html'; ?>

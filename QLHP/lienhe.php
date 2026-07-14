@@ -4,11 +4,12 @@
 <?php
 require_once('mysqlConnect.php');
 
-if(session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
+$name = isset($_POST['name']) ? $_POST['name'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
 
 if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
     $name = $_POST['name'];
@@ -29,25 +30,6 @@ if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
 
     $stmt->close();
 }
-
-if(isset($_SESSION["user"])) {
-    $user = $_SESSION["user"];
-    $name = $user["name"];
-    $email = $user["email"];
-
-    $stmt = $mysqli->prepare("SELECT * FROM nguoidung WHERE email=?");
-    $stmt->bind_param("s", $_SESSION['user']['email']);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    if ($row = $result->fetch_assoc()) {
-        $name = $row['name'];
-        $email = $row['email'];
-    }
-    $stmt->close();
-}
-
 ?>
 
 <div class="contact-page-wrapper">
@@ -84,7 +66,7 @@ if(isset($_SESSION["user"])) {
                 </div>
                 <div class="btn-submit-wrapper">
                     <button type="submit" name="submit" value="sendContact">Gửi liên hệ</button>
-                </div> 
+                </div>
             </form>
         </div>
     </div>
@@ -92,6 +74,5 @@ if(isset($_SESSION["user"])) {
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8954452285197!2d105.81403517596956!3d21.036869287501317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1446924849%3A0x6bba8475928d3283!2zMjY2IMSQ4buZaSBD4bqlbiwgTGnhu4V1IEdpYWksIEJhIMSQw6xuaCwgSMOgIE7hu5lpLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>
-
 
 <?php include 'footer.html'; ?>
