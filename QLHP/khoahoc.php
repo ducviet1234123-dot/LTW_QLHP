@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $is_logged_in     = isset($_SESSION['user']);
-$current_user_id  = $_SESSION['user']['id'] ?? null;
+$current_user_id  = $_SESSION['user']['ID'] ?? null;
 
 // 1. XỬ LÝ ĐĂNG KÝ KHÓA HỌC (POST) — dùng mẫu Post/Redirect/Get
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enroll') {
@@ -60,12 +60,12 @@ foreach ($all_courses as $c) {
 $registered = [];
 if ($is_logged_in) {
   $stmt = $mysqli->prepare(
-    "SELECT kh.*, dk.ngaydangky
+    "SELECT kh.*, dk.ngaydangky, dk.trang_thai
          FROM dangkykhoahoc dk
          JOIN khoahoc kh ON dk.id_khoahoc = kh.makh
          WHERE dk.id_nguoidung = ?
          ORDER BY dk.ngaydangky DESC"
-  );
+);
   $stmt->bind_param("i", $current_user_id);
   $stmt->execute();
   $res = $stmt->get_result();
@@ -144,18 +144,14 @@ unset($c);
         <h2><?php echo htmlspecialchars($title); ?></h2>
         <p><?php echo htmlspecialchars($desc); ?></p>
       </div>
-    <div class="roadmap">
-    <?php foreach ($course_list as $i => $course):
-      $is_registered = in_array($course['makh'], $registered_ids);
-      $panelId = $key . '-' . $course['makh'];
-    ?>
-      <!-- Bọc cặp card và panel trong cùng 1 khối course-item -->
-      <div class="course-item">
-          
-          <!-- Thẻ khóa học hiển thị -->
+      <div class="roadmap">
+        <?php foreach ($course_list as $i => $course):
+          $is_registered = in_array($course['makh'], $registered_ids);
+        ?>
           <div class="course-card <?php echo $is_registered ? 'is-registered' : ''; ?>"
             data-name="<?php echo htmlspecialchars(mb_strtolower($course['tenkh'])); ?>"
-            onclick="toggleDetail('<?php echo htmlspecialchars($panelId); ?>', '<?php echo $course['makh']; ?>')">
+            data-makh="<?php echo $course['makh']; ?>"
+            onclick="toggleDetail(this, '<?php echo $course['makh']; ?>')">
 
             <div class="card-media <?php echo empty($course['hinhanh']) ? $gradClass : 'card-media-photo'; ?>">
               <?php if (!empty($course['hinhanh'])): ?>
@@ -176,13 +172,11 @@ unset($c);
               <?php endif; ?>
             </div>
           </div>
+        <?php endforeach; ?>
 
-          <!-- Bảng thông tin chi tiết -->
-          <div class="detail-panel" id="detail-<?php echo htmlspecialchars($panelId); ?>"></div>
-          
+        <!-- CHỈ 1 panel dùng chung cho cả danh mục, JS sẽ tự dời vị trí -->
+        <div class="detail-panel"></div>
       </div>
-    <?php endforeach; ?>
-  </div>
     </section>
   <?php endforeach; ?>
 

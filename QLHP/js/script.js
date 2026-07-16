@@ -1,7 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
   initSearch();
   showFlashToast();
+  initAnchorCenterScroll();
 });
+
+// CUỘN MỎ NEO DANH MỤC KHÓA HỌC RA GIỮA MÀN HÌNH (thay vì sát mép trên mặc định)
+function initAnchorCenterScroll() {
+  // TH1: Vừa tải trang xong mà URL đã có sẵn #hash (đến từ trang khác như index.php, lienhe.php)
+  if (location.hash) {
+    const target = document.querySelector(location.hash);
+    if (target) {
+      // Đợi layout (ảnh, font) ổn định rồi mới tự "sửa" lại vị trí cuộn cho chuẩn
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+      });
+    }
+  }
+
+  // TH2: Bấm submenu ngay khi đang đứng sẵn tại khoahoc.php -> chặn nhảy mặc định, tự cuộn mượt
+  document.querySelectorAll('a[href*="khoahoc.php#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const url = new URL(link.href, window.location.href);
+      if (url.pathname !== window.location.pathname || !url.hash) return;
+
+      const target = document.querySelector(url.hash);
+      if (!target) return;
+
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      history.pushState(null, '', url.hash);
+    });
+  });
+}
 
 function initSearch() {
   const input = document.getElementById('searchInput');
@@ -40,57 +72,88 @@ function showToast(msg, type = 'success') {
   }, 3000);
 }
 
-// XỬ LÝ SỔ CHI TIẾT THEO TỪNG CẶP Ô TRÊN GRID NHIỀU HÀNG
-let currentOpenId = null;
+// XỬ LÝ SỔ CHI TIẾT: 1 PANEL DÙNG CHUNG, DI CHUYỂN THEO HÀNG ĐANG BẤM
 
-function toggleDetail(panelId, makh) {
-  const panel = document.getElementById('detail-' + panelId);
+function getRowCards(roadmap, clickedCard) {
+  const cards = Array.from(roadmap.querySelectorAll(':scope > .course-card'));
+  const top = clickedCard.offsetTop;
+  return cards.filter(c => Math.abs(c.offsetTop - top) < 3);
+}
+
+function toggleDetail(cardEl, makh) {
+  const roadmap = cardEl.closest('.roadmap');
+  const panel = roadmap.querySelector('.detail-panel');
   if (!panel) return;
 
-  // Nếu click lại vào ô đang mở -> Thu gọn đóng lại
-  if (currentOpenId === panelId) {
-    panel.classList.remove('open');
+  const isSameOpen = panel.dataset.openId === String(makh) && panel.classList.contains('open');
+
+  // Đóng panel hiện tại trước (dù đang mở ở khóa nào, kể cả ở danh mục khác)
+  document.querySelectorAll('.detail-panel.open').forEach(p => {
+    p.classList.remove('open');
+    p.dataset.openId = '';
+  });
+
+  if (isSameOpen) {
+    // Bấm lại đúng khóa đang mở -> đóng lại, không mở nữa
     setTimeout(() => {
       if (!panel.classList.contains('open')) panel.innerHTML = '';
     }, 350);
-    currentOpenId = null;
     return;
   }
-
-  // Đóng toàn bộ các bảng chi tiết khác đang mở trên giao diện trước
-  document.querySelectorAll('.detail-panel').forEach(p => {
-    p.classList.remove('open');
-    p.innerHTML = '';
-  });
 
   const course = ALL_COURSES.find(c => String(c.makh) === String(makh));
   if (!course) return;
 
   panel.innerHTML = renderDetailHTML(course);
-  
-  // Kích hoạt animation thông qua requestAnimationFrame
+  panel.dataset.openId = String(makh);
+
+  // Dời panel tới ngay sau card cuối cùng của HÀNG chứa card vừa bấm
+  const rowCards = getRowCards(roadmap, cardEl);
+  const lastCardInRow = rowCards[rowCards.length - 1];
+  lastCardInRow.insertAdjacentElement('afterend', panel);
+
   requestAnimationFrame(() => {
     panel.classList.add('open');
   });
-  currentOpenId = panelId;
 
   setTimeout(() => {
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 150);
 }
 
-// Bấm click ra ngoài khoảng trống không thuộc card/panel để thu gọn layout lại
-document.addEventListener('click', function(e) {
+// Bấm ra ngoài để đóng hết panel đang mở
+document.addEventListener('click', function (e) {
   if (!e.target.closest('.course-card') && !e.target.closest('.detail-panel')) {
-    document.querySelectorAll('.detail-panel').forEach(p => {
+    document.querySelectorAll('.detail-panel.open').forEach(p => {
       p.classList.remove('open');
+      p.dataset.openId = '';
       setTimeout(() => {
         if (!p.classList.contains('open')) p.innerHTML = '';
       }, 350);
     });
-    currentOpenId = null;
   }
 });
+
+// Khi resize màn hình, số cột mỗi hàng có thể đổi -> dời lại panel đang mở cho đúng vị trí
+window.addEventListener('resize', debounce(() => {
+  document.querySelectorAll('.detail-panel.open').forEach(panel => {
+    const roadmap = panel.closest('.roadmap');
+    const openId = panel.dataset.openId;
+    if (!roadmap || !openId) return;
+    const card = roadmap.querySelector(`.course-card[data-makh="${openId}"]`);
+    if (!card) return;
+    const rowCards = getRowCards(roadmap, card);
+    rowCards[rowCards.length - 1].insertAdjacentElement('afterend', panel);
+  });
+}, 200));
+
+function debounce(fn, wait) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
 
 function renderDetailHTML(course) {
   const noidung = Array.isArray(course.noidung) ? course.noidung : [];
