@@ -16,26 +16,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enrol
 
   if (!$is_logged_in) {
     $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Vui lòng đăng nhập trước khi đăng ký khóa học.'];
-  } else {
-    $ma_kh        = $_POST['course_id']     ?? '';
-    $ma_giao_dich = trim($_POST['ma_giao_dich'] ?? '');
-    $so_tien      = $_POST['so_tien'] ?? 0;
-
-    $stmt = $mysqli->prepare(
-      "INSERT INTO dangkykhoahoc (id_nguoidung, id_khoahoc, ma_giao_dich, so_tien)
-             VALUES (?, ?, ?, ?)"
-    );
-    $stmt->bind_param("isss", $current_user_id, $ma_kh, $ma_giao_dich, $so_tien);
-
-    if ($stmt->execute()) {
-      $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký thành công! Chúng tôi sẽ xác nhận thanh toán trong thời gian sớm nhất.'];
-    } elseif ($mysqli->errno === 1062) {
-      $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
-    } else {
-      $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Có lỗi xảy ra, vui lòng thử lại.'];
-    }
-    $stmt->close();
+    header('Location: khoahoc.php');
+    exit();
   }
+
+  $ma_kh        = $_POST['course_id']     ?? '';
+  $ma_giao_dich = trim($_POST['ma_giao_dich'] ?? '');
+  $so_tien      = $_POST['so_tien'] ?? 0;
+
+  $stmt = $mysqli->prepare("INSERT INTO dangkykhoahoc (id_nguoidung, id_khoahoc, ma_giao_dich, so_tien)
+           VALUES (?, ?, ?, ?)");
+  $stmt->bind_param("iiss", $current_user_id, $ma_kh, $ma_giao_dich, $so_tien);
+
+  if ($stmt->execute()) {
+    $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký thành công! Chúng tôi sẽ xác nhận thanh toán trong thời gian sớm nhất.'];
+  } elseif ($mysqli->errno === 1062) {
+    $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
+  } else {
+    $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Có lỗi xảy ra, vui lòng thử lại.'];
+  }
+  $stmt->close();
 
   header('Location: khoahoc.php');
   exit();
