@@ -510,10 +510,6 @@ footer{
     align-items: start;
 }
 
-.course-item {
-    display: grid;
-    grid-column: span 1;
-}
 
 /* Thẻ hiển thị khóa học */
 .roadmap .course-card {
@@ -596,6 +592,7 @@ footer{
 
 /* BẢNG CHI TIẾT KHÓA HỌC */
 .detail-panel {
+    grid-column: 1 / -1;
     display: block;      
     background: #f9f9f9;
     border: 1px solid #ddd;

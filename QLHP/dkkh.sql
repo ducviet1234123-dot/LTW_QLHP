@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `dkkh`
 --
-
+CREATE DATABASE IF NOT EXISTS `dkkh`;
+USE `dkkh`;
 -- --------------------------------------------------------
 
 --
