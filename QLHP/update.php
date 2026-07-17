@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $year = $_POST["year"];
     $email = $user["email"];
 
-    $thongtin = $mysqli->prepare("UPDATE nguoidung SET `name`=?, `year of birth`=? WHERE email=?");
+    $thongtin = $mysqli->prepare("UPDATE nguoidung SET `name`=?, `year_of_birth`=? WHERE email=?");
     $thongtin->bind_param("sis", $name, $year, $email);
     $thongtin->execute();
 

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enrol
            VALUES (?, ?, ?, ?)");
   $stmt->bind_param("iiss", $current_user_id, $ma_kh, $ma_giao_dich, $so_tien);
 
-  if ($stmt->execute()) {
+  if ($stmt->execute()) {/
     $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký thành công! Chúng tôi sẽ xác nhận thanh toán trong thời gian sớm nhất.'];
   } elseif ($mysqli->errno === 1062) {
     $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
