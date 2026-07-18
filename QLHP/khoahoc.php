@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'enrol
            VALUES (?, ?, ?, ?)");
   $stmt->bind_param("iiss", $current_user_id, $ma_kh, $ma_giao_dich, $so_tien);
 
-  if ($stmt->execute()) {/
+  if ($stmt->execute()) {
     $_SESSION['flash'] = ['type' => 'success', 'msg' => 'Đăng ký thành công! Chúng tôi sẽ xác nhận thanh toán trong thời gian sớm nhất.'];
   } elseif ($mysqli->errno === 1062) {
     $_SESSION['flash'] = ['type' => 'error', 'msg' => 'Bạn đã đăng ký khóa học này rồi.'];
@@ -77,11 +77,11 @@ if ($is_logged_in) {
 $registered_ids = array_column($registered, 'makh');
 
 $category_titles = [
-  'toeic'    => ['Lộ trình TOEIC', 'Dành cho người cần thi chứng chỉ 2 kỹ năng nghe đọc truyền thống.',],
-  'ielts'    => ['Lộ trình IELTS', 'Chuẩn học thuật Academic quốc tế phục vụ du học, xét tuyển.',],
-  'vstep'    => ['Lộ trình VSTEP', 'Định dạng đề thi đánh giá năng lực ngoại ngữ theo khung chuẩn VN.',],
-  'cambridge' => ['Lộ trình Cambridge English', 'Chuẩn quốc tế với các chứng chỉ KET, PET, FCE, CAE, CPE.',],
-  'giaotiep' => ['Tiếng Anh Giao Tiếp', 'Phát triển phản xạ nghe nói tự nhiên cho đời sống và công việc.',],
+  'toeic'    => ['Lộ trình TOEIC', 'Dành cho người cần thi chứng chỉ 2 kỹ năng nghe đọc truyền thống.', 'grad-toeic'],
+  'ielts'    => ['Lộ trình IELTS', 'Chuẩn học thuật Academic quốc tế phục vụ du học, xét tuyển.', 'grad-ielts'],
+  'vstep'    => ['Lộ trình VSTEP', 'Định dạng đề thi đánh giá năng lực ngoại ngữ theo khung chuẩn VN.', 'grad-vstep'],
+  'cambridge' => ['Lộ trình Cambridge English', 'Chuẩn quốc tế với các chứng chỉ KET, PET, FCE, CAE, CPE.', 'grad-ielts'],
+  'giaotiep' => ['Tiếng Anh Giao Tiếp', 'Phát triển phản xạ nghe nói tự nhiên cho đời sống và công việc.', 'grad-giaotiep'],
 ];
 
 $js_courses = $all_courses;
