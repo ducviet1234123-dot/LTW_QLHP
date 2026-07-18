@@ -65,7 +65,7 @@ if ($is_logged_in) {
          JOIN khoahoc kh ON dk.id_khoahoc = kh.makh
          WHERE dk.id_nguoidung = ?
          ORDER BY dk.ngaydangky DESC"
-);
+  );
   $stmt->bind_param("i", $current_user_id);
   $stmt->execute();
   $res = $stmt->get_result();
@@ -104,7 +104,6 @@ unset($c);
     <section class="category my-courses">
       <div class="category-head">
         <h2>Khóa học của tôi</h2>
-        <p>Danh sách khóa học bạn đã đăng ký, lấy trực tiếp từ CSDL.</p>
       </div>
       <div class="course-grid">
         <?php foreach ($registered as $c):
@@ -115,13 +114,8 @@ unset($c);
           };
         ?>
           <div class="course-card enrolled">
-            <div class="card-media <?php echo empty($c['hinhanh']) ? '' : 'card-media-photo'; ?>">
-              <?php if (!empty($c['hinhanh'])): ?>
-                <img src="<?php echo htmlspecialchars($c['hinhanh']); ?>" alt="<?php echo htmlspecialchars($c['tenkh']); ?>">
-              <?php else: ?>
-                <?php echo htmlspecialchars($c['tenkh']); ?>
-              <?php endif; ?>
-              <span class="enrolled-badge <?php echo $trangThaiText[1]; ?>"><?php echo $trangThaiText[0]; ?></span>
+            <div class="card-media card-media-photo">
+              <img src="<?php echo htmlspecialchars($c['hinhanh']); ?>" alt="<?php echo htmlspecialchars($c['tenkh']); ?>">
             </div>
             <div class="card-body">
               <h3><?php echo htmlspecialchars($c['tenkh']); ?></h3>
@@ -137,7 +131,7 @@ unset($c);
   <?php endif; ?>
 
   <?php foreach ($courses as $key => $course_list):
-    [$title, $desc, $gradClass] = $category_titles[$key] ?? [$key, '', 'grad-toeic'];
+    [$title, $desc] = $category_titles[$key] ?? [$key, ''];
   ?>
     <section class="category" id="<?php echo htmlspecialchars($key); ?>" data-category="<?php echo htmlspecialchars($key); ?>">
       <div class="category-head">
@@ -153,12 +147,8 @@ unset($c);
             data-makh="<?php echo $course['makh']; ?>"
             onclick="toggleDetail(this, '<?php echo $course['makh']; ?>')">
 
-            <div class="card-media <?php echo empty($course['hinhanh']) ? $gradClass : 'card-media-photo'; ?>">
-              <?php if (!empty($course['hinhanh'])): ?>
-                <img src="<?php echo htmlspecialchars($course['hinhanh']); ?>" alt="<?php echo htmlspecialchars($course['tenkh']); ?>">
-              <?php else: ?>
-                <?php echo htmlspecialchars($course['tenkh']); ?>
-              <?php endif; ?>
+            <div class="card-media card-media-photo">
+              <img src="<?php echo htmlspecialchars($course['hinhanh']); ?>" alt="<?php echo htmlspecialchars($course['tenkh']); ?>">
             </div>
 
             <div class="card-body">
@@ -174,7 +164,6 @@ unset($c);
           </div>
         <?php endforeach; ?>
 
-        <!-- CHỈ 1 panel dùng chung cho cả danh mục, JS sẽ tự dời vị trí -->
         <div class="detail-panel"></div>
       </div>
     </section>
