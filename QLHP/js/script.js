@@ -4,22 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initAnchorCenterScroll();
 });
 
-// CUỘN MỎ NEO DANH MỤC KHÓA HỌC RA GIỮA MÀN HÌNH (thay vì sát mép trên mặc định)
+// CUỘN DANH MỤC KHÓA HỌC RA GIỮA MÀN HÌNH 
 function initAnchorCenterScroll() {
-  // TH1: Vừa tải trang xong mà URL đã có sẵn #hash (đến từ trang khác như index.php, lienhe.php)
-  if (location.hash) {
-    const target = document.querySelector(location.hash);
-    if (target) {
-      // Đợi layout (ảnh, font) ổn định rồi mới tự "sửa" lại vị trí cuộn cho chuẩn
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 50);
-      });
-    }
-  }
-
-  // TH2: Bấm submenu ngay khi đang đứng sẵn tại khoahoc.php -> chặn nhảy mặc định, tự cuộn mượt
   document.querySelectorAll('a[href*="khoahoc.php#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const url = new URL(link.href, window.location.href);
@@ -34,7 +20,6 @@ function initAnchorCenterScroll() {
     });
   });
 }
-
 function initSearch() {
   const input = document.getElementById('searchInput');
   if (!input) return;
@@ -123,7 +108,11 @@ function toggleDetail(cardEl, makh) {
 
 // Bấm ra ngoài để đóng hết panel đang mở
 document.addEventListener('click', function (e) {
-  if (!e.target.closest('.course-card') && !e.target.closest('.detail-panel')) {
+  if (
+    !e.target.closest('.course-card') &&
+    !e.target.closest('.detail-panel') &&
+    !e.target.closest('.modal-overlay')
+  ) {
     document.querySelectorAll('.detail-panel.open').forEach(p => {
       p.classList.remove('open');
       p.dataset.openId = '';
