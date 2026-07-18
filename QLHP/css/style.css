@@ -64,7 +64,7 @@ main {
 }
 
 /* HEADER */
-header {
+.site-header {
     height: 90px;
     display: flex;
     align-items: center;
@@ -74,36 +74,36 @@ header {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
-.logo h1 {
+.site-logo h1 {
     color: var(--primary-dark);
     font-size: 38px;
     line-height: 35px;
     font-weight: 900;
 }
 
-nav ul {
+.site-nav-list {
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-nav ul li a {
+.site-nav-list li a {
     position: relative;
     color: #002b45;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
-nav ul li a:hover {
+.site-nav-list li a:hover {
     color: var(--accent);
 }
 
-.dromysqliwn {
+.nav-dropdown {
     position: relative;
     display: inline-block;
 }
 
-.dromysqliwn .submenu {
+.nav-dropdown .site-submenu {
     display: none;
     position: absolute;
     top: 100%;
@@ -114,17 +114,17 @@ nav ul li a:hover {
     z-index: 1000;
 }
 
-.profile-dromysqliwn .profile-menu {
+.profile-dropdown .profile-menu {
     left: auto;
     right: 0;
     font-weight: 700;
 }
 
-.dromysqliwn:hover .submenu {
+.nav-dropdown:hover .site-submenu {
     display: block;
 }
 
-.submenu li a {
+.site-submenu li a {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -134,7 +134,7 @@ nav ul li a:hover {
     transition: background 0.2s ease, color 0.2s ease;
 }
 
-.submenu li a:hover {
+.site-submenu li a:hover {
     background: #f5f5f5;
     color: #4b208c;
 }
@@ -161,18 +161,18 @@ nav ul li a:hover {
     background: #ffebee;
 }
 
-.account {
+.site-account {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.login {
+.auth-link {
     color: #111;
     font-weight: 700;
 }
 
-.register {
+.auth-button {
     padding: 13px 22px;
     border-radius: 8px;
     background: var(--accent);
@@ -181,7 +181,7 @@ nav ul li a:hover {
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.register:hover {
+.auth-button:hover {
     background: #d92b22;
     transform: translateY(-1px);
 }
@@ -196,7 +196,7 @@ fieldset {
     background: #fff;
 }
 
-.row {
+.form-row {
     display: grid;
     grid-template-columns: 150px 1fr;
     align-items: center;
@@ -204,9 +204,9 @@ fieldset {
     margin: 8px 10px;
 }
 
-.row input,
-.row select,
-.row textarea {
+.form-row input,
+.form-row select,
+.form-row textarea {
     width: 100%;
     max-width: 420px;
     padding: 8px 10px;
@@ -215,7 +215,7 @@ fieldset {
     font-weight: 600;
 }
 
-.row label {
+.form-row label {
     grid-column: 1 / 2;
     margin-right: 10px;
     text-align: right;
@@ -428,36 +428,36 @@ button[type="submit"] {
 }
 
 /* FOOTER */
-footer {
+.site-footer {
     margin-top: 60px;
     background: #0f1d3d;
     color: #fff;
 }
 
-.footer-container {
+.footer-grid {
     display: flex;
     justify-content: space-between;
     gap: 24px;
     padding: 50px 80px;
 }
 
-.footer-col {
+.footer-column {
     width: 30%;
 }
 
-.footer-col h3 {
+.footer-column h3 {
     margin-bottom: 20px;
 }
 
-.footer-col ul li {
+.footer-column ul li {
     margin: 12px 0;
 }
 
-.footer-col ul li a:hover {
+.footer-column ul li a:hover {
     color: #ff4040;
 }
 
-.copyright {
+.footer-copy {
     padding: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     text-align: center;
@@ -510,7 +510,7 @@ footer {
     border-top: 1px solid #eee;
 }
 
-.form-container h2 {
+.contact-form h2 {
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 700;
@@ -518,15 +518,15 @@ footer {
     text-align: left;
 }
 
-.form-container .row {
+.contact-form .form-row {
     display: block;
     width: 100%;
     margin-bottom: 15px;
 }
 
-.form-container input[type="text"],
-.form-container input[type="email"],
-.form-container textarea {
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
     width: 100%;
     max-width: 100%;
     padding: 12px 20px;
@@ -542,12 +542,12 @@ footer {
     resize: vertical;
 }
 
-.btn-submit-wrapper {
+.form-actions {
     margin-top: 15px;
     text-align: left;
 }
 
-.form-container button[type="submit"] {
+.contact-form button[type="submit"] {
     padding: 12px 35px;
     border-radius: 30px;
     background: linear-gradient(90deg, #8ba812 0%, #eb875e 100%);
@@ -556,7 +556,7 @@ footer {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.form-container button[type="submit"]:hover {
+.contact-form button[type="submit"]:hover {
     opacity: 0.9;
     transform: translateY(-2px);
 }
@@ -576,13 +576,13 @@ footer {
 }
 
 /* COURSES */
-.khoahoc-toolbar {
+.course-toolbar {
     display: flex;
     justify-content: center;
     padding: 30px 40px 0;
 }
 
-#searchInput {
+#courseSearchInput {
     width: 100%;
     max-width: 520px;
     padding: 12px 20px;
@@ -593,34 +593,34 @@ footer {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#searchInput:focus {
+#courseSearchInput:focus {
     border-color: #f05123;
     box-shadow: 0 0 0 3px rgba(240, 81, 35, 0.15);
 }
 
-.khoahoc-container {
+.course-page {
     max-width: 1240px;
     margin: 0 auto;
     padding: 20px 40px 80px;
 }
 
-.category {
+.course-section {
     margin-bottom: 50px;
 }
 
-.category-head {
+.course-section-head {
     margin-bottom: 20px;
     text-align: left;
 }
 
-.category-head h2 {
+.course-section-head h2 {
     margin-bottom: 6px;
     font-size: 24px;
     font-weight: 700;
     color: #242424;
 }
 
-.category-head p {
+.course-section-head p {
     color: #666;
     font-size: 14px;
 }
@@ -702,7 +702,7 @@ footer {
     font-weight: 600;
 }
 
-.detail-panel {
+.course-detail-panel {
     grid-column: 1 / -1;
     display: block;
     width: 100%;
@@ -717,7 +717,8 @@ footer {
     transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease, margin 0.2s ease, border-width 0.2s ease;
 }
 
-.detail-panel.open {
+
+.course-detail-panel.open {
     max-height: 1200px;
     margin-top: 12px;
     margin-bottom: 16px;
@@ -726,31 +727,31 @@ footer {
     opacity: 1;
 }
 
-.detail-panel h3 {
+.course-detail-panel h3 {
     margin-bottom: 12px;
     font-size: 18px;
     color: #1a4b8f;
 }
 
-.detail-panel table {
+.course-detail-panel table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.detail-panel th,
-.detail-panel td {
+.course-detail-panel th,
+.course-detail-panel td {
     padding: 10px;
     border-bottom: 1px solid #eee;
     text-align: left;
     font-size: 14px;
 }
 
-.detail-panel th {
+.course-detail-panel th {
     background: #f8fafc;
     color: #333;
 }
 
-.detail-panel .btn-enroll {
+.course-detail-panel .btn-enroll {
     margin-top: 15px;
     padding: 10px 24px;
     border: none;
@@ -763,7 +764,7 @@ footer {
     transition: opacity 0.2s ease;
 }
 
-.detail-panel .btn-enroll:hover {
+.course-detail-panel .btn-enroll:hover {
     opacity: 0.9;
 }
 
@@ -794,7 +795,7 @@ footer {
     font-size: 11px;
 }
 
-.toast {
+.site-toast {
     position: fixed;
     right: 30px;
     bottom: 30px;
@@ -810,16 +811,16 @@ footer {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.toast.show {
+.site-toast.show {
     opacity: 1;
     transform: translateY(0);
 }
 
-.toast.success {
+.site-toast.success {
     background: #2e7d32;
 }
 
-.toast.error {
+.site-toast.error {
     background: #d92b22;
 }
 
@@ -990,7 +991,7 @@ footer {
         gap: 12px;
     }
 
-    .khoahoc-container {
+    .course-page {
         padding: 10px 20px;
     }
 
@@ -1006,12 +1007,12 @@ footer {
         min-height: 350px;
     }
 
-    .footer-container {
+    .footer-grid {
         flex-direction: column;
         padding: 30px 20px;
     }
 
-    .footer-col {
+    .footer-column {
         width: 100%;
     }
 }

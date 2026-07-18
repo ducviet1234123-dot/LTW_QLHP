@@ -92,17 +92,17 @@ foreach ($js_courses as &$c) {
 unset($c);
 ?>
 
-<div class="khoahoc-toolbar">
-  <input type="text" id="searchInput" placeholder="Tìm khóa học TOEIC, IELTS, VSTEP...">
+<div class="course-toolbar">
+  <input type="text" id="courseSearchInput" placeholder="Tìm khóa học TOEIC, IELTS, VSTEP...">
 </div>
 
-<div class="khoahoc-container"
+<div class="course-page"
   data-flash-type="<?php echo $flash ? htmlspecialchars($flash['type']) : ''; ?>"
   data-flash-msg="<?php echo $flash ? htmlspecialchars($flash['msg']) : ''; ?>">
 
   <?php if ($is_logged_in && !empty($registered)): ?>
-    <section class="category my-courses">
-      <div class="category-head">
+    <section class="course-section my-courses">
+      <div class="course-section-head">
         <h2>Khóa học của tôi</h2>
       </div>
       <div class="course-grid">
@@ -133,8 +133,8 @@ unset($c);
   <?php foreach ($courses as $key => $course_list):
     [$title, $desc] = $category_titles[$key] ?? [$key, ''];
   ?>
-    <section class="category" id="<?php echo htmlspecialchars($key); ?>" data-category="<?php echo htmlspecialchars($key); ?>">
-      <div class="category-head">
+    <section class="course-section" id="<?php echo htmlspecialchars($key); ?>" data-category="<?php echo htmlspecialchars($key); ?>">
+      <div class="course-section-head">
         <h2><?php echo htmlspecialchars($title); ?></h2>
         <p><?php echo htmlspecialchars($desc); ?></p>
       </div>
@@ -164,14 +164,14 @@ unset($c);
           </div>
         <?php endforeach; ?>
 
-        <div class="detail-panel"></div>
+        <div class="course-detail-panel"></div>
       </div>
     </section>
   <?php endforeach; ?>
 
 </div>
 
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="siteToast" class="site-toast" role="status" aria-live="polite"></div>
 
 <script>
   const ALL_COURSES = <?php echo json_encode($js_courses, JSON_UNESCAPED_UNICODE); ?>;

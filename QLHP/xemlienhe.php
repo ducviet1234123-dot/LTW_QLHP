@@ -34,16 +34,16 @@ $result = $mysqli->query($query);
 </head>
 <body>
 <main>
-    <div class="khoahoc-container">
+    <div class="course-page">
         
-        <section class="category">
-            <div class="category-head">
+        <section class="course-section">
+            <div class="course-section-head">
                 <h2>Danh sách ý kiến liên hệ</h2>
             </div>
             
             <div class="course-grid" style="grid-template-columns: 1fr;">
                 <div class="course-card enrolled">
-                    <div class="card-body detail-panel" style="max-height: none; opacity: 1; border-width: 0; padding: 20px; overflow: visible;">
+                    <div class="card-body course-detail-panel" style="max-height: none; opacity: 1; border-width: 0; padding: 20px; overflow: visible;">
                         
                         <table>
                             <thead>

@@ -26,19 +26,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div style="text-align: center; color: black">
                 <h1>THÔNG TIN ĐĂNG KÝ THÀNH VIÊN</h1>
         </div>
-        <div class="row">
+        <div class="form-row">
             <label for="name">Họ tên:</label>
             <input type="text" name="name" placeholder="Điền họ tên"> <br>
         </div>
-        <div class="row">
+        <div class="form-row">
             <label for="email">Địa chỉ Email:</label>
             <input type="email" name="email" placeholder="Điền email"> <br>
         </div>
-        <div class="row">
+        <div class="form-row">
             <label for="pass">Mật khẩu:</label>
             <input type="password" name="pass" placeholder="Điền mật khẩu"> <br>
         </div>
-        <div class="row">
+        <div class="form-row">
             <label for="year">Năm sinh:</label>
             <select  style="width:15%" name="year" id="year">
             <?php 
