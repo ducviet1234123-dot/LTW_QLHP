@@ -34,11 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div style="text-align: center; color: black">
         <h1>Đăng nhập</h1>
     </div>
-    <div class="form-row">
+    <div class="row">
         <label for="email">Email:</label>
         <input placeholder="Điền email" type="email" name="email" required><br>
     </div>
-    <div class="form-row">
+    <div class="row">
         <label for="pass">Mật khẩu:</label>
         <input placeholder="Điền mật khẩu" type="password" name="pass" required><br>
     </div>

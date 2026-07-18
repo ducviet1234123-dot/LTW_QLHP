@@ -36,24 +36,24 @@
 
 <body>
 
-    <header class="site-header">
-        <div class="site-logo">
+    <header>
+        <div class="logo">
             <a href="index.php">
                 <h1>THE <br>FORUM</h1>
             </a>
         </div>
 
-        <nav class="site-nav">
-            <ul class="site-nav-list">
+        <nav>
+            <ul>
                 <li><a href="index.php">Trang chủ</a></li>
 
                 <!-- Dromysqliwn Khóa học -->
-                <li class="nav-dropdown">
+                <li class="dromysqliwn">
                     <a href="khoahoc.php">
                         Khóa học
                         <i class="fa-solid fa-chevron-down"></i>
                     </a>
-                    <ul class="site-submenu">
+                    <ul class="submenu">
                         <li><a href="khoahoc.php#ielts">IELTS</a></li>
                         <li><a href="khoahoc.php#toeic">TOEIC</a></li>
                         <li><a href="khoahoc.php#vstep">VSTEP</a></li>
@@ -77,17 +77,17 @@
             </ul>
         </nav>
 
-        <div class="site-account">
+        <div class="account">
             <?php
             if (isset($_SESSION['user'])) {
                 $user = $_SESSION["user"];
                 echo '<p>' . htmlspecialchars($user["name"]) . '</p>';
                 echo '
-                <div class="dropdown profile-dropdown">
+                <div class="dromysqliwn profile-dromysqliwn">
                     <a href="#" class="profile-btn">
                         <i class="fa-solid fa-user"></i>
                     </a>
-                    <ul class="site-submenu profile-menu">
+                    <ul class="submenu profile-menu">
                         <li><a href="profile.php"><i class="fa-regular fa-id-card"></i> Thông tin cá nhân</a></li>
                         <li><a href="khoahoc.php"><i class="fa-solid fa-book"></i> Khóa học hiện tại</a></li>
                         <li><a href="update.php"><i class="fa-solid fa-pen-to-square"></i> Cập nhật thông tin</a></li>';
@@ -104,8 +104,8 @@
                 ';
             } else {
                 echo '
-                    <a class="auth-link" href="dangnhap.php">Đăng nhập</a>
-                    <a class="auth-button" href="dangky.php">Đăng ký</a>
+                    <a class="login" href="dangnhap.php">Đăng nhập</a>
+                    <a class="register" href="dangky.php">Đăng ký</a>
                 ';
             }
             ?>

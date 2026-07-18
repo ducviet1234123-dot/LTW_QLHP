@@ -21,7 +21,7 @@ function initAnchorCenterScroll() {
   });
 }
 function initSearch() {
-  const input = document.getElementById('courseSearchInput') || document.getElementById('searchInput');
+  const input = document.getElementById('searchInput');
   if (!input) return;
 
   input.addEventListener('input', () => {
@@ -34,7 +34,7 @@ function initSearch() {
 }
 
 function showFlashToast() {
-  const container = document.querySelector('.course-page') || document.querySelector('.khoahoc-container');
+  const container = document.querySelector('.khoahoc-container');
   if (!container) return;
 
   const type = container.dataset.flashType;
@@ -45,15 +45,15 @@ function showFlashToast() {
 }
 
 function showToast(msg, type = 'success') {
-  const toast = document.getElementById('siteToast') || document.getElementById('toast');
+  const toast = document.getElementById('toast');
   if (!toast) return;
 
   toast.textContent = msg;
-  toast.className = 'site-toast show ' + type;
+  toast.className = 'toast show ' + type;
 
   clearTimeout(showToast._timer);
   showToast._timer = setTimeout(() => {
-    toast.className = 'site-toast';
+    toast.className = 'toast';
   }, 3000);
 }
 
@@ -67,13 +67,13 @@ function getRowCards(roadmap, clickedCard) {
 
 function toggleDetail(cardEl, makh) {
   const roadmap = cardEl.closest('.roadmap');
-  const panel = roadmap.querySelector('.course-detail-panel') || roadmap.querySelector('.detail-panel');
+  const panel = roadmap.querySelector('.detail-panel');
   if (!panel) return;
 
   const isSameOpen = panel.dataset.openId === String(makh) && panel.classList.contains('open');
 
   // Đóng panel hiện tại trước (dù đang mở ở khóa nào, kể cả ở danh mục khác)
-  document.querySelectorAll('.course-detail-panel.open, .detail-panel.open').forEach(p => {
+  document.querySelectorAll('.detail-panel.open').forEach(p => {
     p.classList.remove('open');
     p.dataset.openId = '';
   });
@@ -110,11 +110,10 @@ function toggleDetail(cardEl, makh) {
 document.addEventListener('click', function (e) {
   if (
     !e.target.closest('.course-card') &&
-    !e.target.closest('.course-detail-panel') &&
     !e.target.closest('.detail-panel') &&
     !e.target.closest('.modal-overlay')
   ) {
-    document.querySelectorAll('.course-detail-panel.open, .detail-panel.open').forEach(p => {
+    document.querySelectorAll('.detail-panel.open').forEach(p => {
       p.classList.remove('open');
       p.dataset.openId = '';
       setTimeout(() => {
@@ -126,7 +125,7 @@ document.addEventListener('click', function (e) {
 
 // Khi resize màn hình, số cột mỗi hàng có thể đổi -> dời lại panel đang mở cho đúng vị trí
 window.addEventListener('resize', debounce(() => {
-  document.querySelectorAll('.course-detail-panel.open, .detail-panel.open').forEach(panel => {
+  document.querySelectorAll('.detail-panel.open').forEach(panel => {
     const roadmap = panel.closest('.roadmap');
     const openId = panel.dataset.openId;
     if (!roadmap || !openId) return;

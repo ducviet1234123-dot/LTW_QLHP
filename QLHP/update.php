@@ -36,15 +36,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div style="text-align: center; color: blue">
         <h1>Cập nhật thông tin</h1>
     </div>
-    <div class="form-row">
+    <div class="row">
         <label for="email">Email:</label>
         <nav><?= $user["email"] ?><br></nav>
     </div>
-    <div class="form-row">
+    <div class="row">
         <label for="name">Họ tên:</label>
         <input style="width:55%" type="text" name="name" value="<?= $user["name"] ?>"><br>
     </div>
-    <div class="form-row">
+    <div class="row">
         <label for="year">Năm sinh:</label>
         <select style="width:30%" name="year">
         <?php

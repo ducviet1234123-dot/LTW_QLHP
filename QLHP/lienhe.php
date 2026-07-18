@@ -49,22 +49,22 @@ if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
             </div>
         </div>
         <hr class="divider">
-        <div class="contact-form">
+        <div class="form-container">
             <h2>Liên hệ với chúng tôi</h2>
             <form method="POST">
-                <div class="form-row">
+                <div class="row">
                     <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" placeholder="Họ và tên" required>
                 </div>
-                <div class="form-row">
+                <div class="row">
                     <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="Email" required>
                 </div>
-                <div class="form-row">
+                <div class="row">
                     <input type="text" name="subject" placeholder="Tiêu đề cần tư vấn" required>
                 </div>
-                <div class="form-row">
+                <div class="row">
                     <textarea name="message" rows="5" placeholder="Nội dung lời nhắn..." required></textarea>
                 </div>
-                <div class="form-actions">
+                <div class="btn-submit-wrapper">
                     <button type="submit" name="submit" value="sendContact">Gửi liên hệ</button>
                 </div>
             </form>
