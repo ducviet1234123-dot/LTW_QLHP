@@ -24,7 +24,6 @@ $query = "SELECT
     FROM dangkykhoahoc
     JOIN nguoidung ON dangkykhoahoc.id_nguoidung = nguoidung.ID
     JOIN khoahoc ON dangkykhoahoc.id_khoahoc = khoahoc.makh
-    -- ORDER BY dangkykhoahoc.ngaydangky DESC, nguoidung.name ASC
 ";
 
 $result = $mysqli->query($query);
