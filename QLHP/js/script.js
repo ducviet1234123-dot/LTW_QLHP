@@ -20,17 +20,141 @@ function initAnchorCenterScroll() {
     });
   });
 }
+// TÌM KIẾM: GỢI Ý + LỊCH SỬ (không ẩn khóa học khác trong danh sách)
+
+const SEARCH_HISTORY_KEY = 'khoahoc_search_history';
+const SEARCH_HISTORY_MAX = 5;
+
+function getSearchHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function addSearchHistory(keyword) {
+  keyword = keyword.trim();
+  if (!keyword) return;
+  let history = getSearchHistory().filter(k => k.toLowerCase() !== keyword.toLowerCase());
+  history.unshift(keyword);
+  history = history.slice(0, SEARCH_HISTORY_MAX);
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+}
+
+function removeSearchHistory(keyword) {
+  const history = getSearchHistory().filter(k => k !== keyword);
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+}
+
 function initSearch() {
   const input = document.getElementById('searchInput');
-  if (!input) return;
+  const box = document.getElementById('searchSuggestions');
+  if (!input || !box) return;
 
-  input.addEventListener('input', () => {
-    const keyword = input.value.trim().toLowerCase();
-    document.querySelectorAll('.roadmap .course-card[data-name]').forEach(card => {
-      const name = card.dataset.name || '';
-      card.style.display = name.includes(keyword) ? '' : 'none';
+  input.addEventListener('input', () => renderSearchSuggestions(input.value));
+  input.addEventListener('focus', () => renderSearchSuggestions(input.value));
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const firstItem = box.querySelector('.search-suggestion-item[data-makh]');
+    if (firstItem) {
+      firstItem.click();
+    } else if (input.value.trim()) {
+      addSearchHistory(input.value);
+      renderSearchSuggestions(input.value);
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrap')) {
+      box.classList.remove('open');
+    }
+  });
+}
+
+function renderSearchSuggestions(rawKeyword) {
+  const box = document.getElementById('searchSuggestions');
+  if (!box) return;
+  const keyword = rawKeyword.trim().toLowerCase();
+
+  if (!keyword) {
+    const history = getSearchHistory();
+    if (!history.length) {
+      box.classList.remove('open');
+      box.innerHTML = '';
+      return;
+    }
+    box.innerHTML = '<div class="search-suggestions-label">Tìm kiếm gần đây</div>' +
+      history.map(k => `
+        <div class="search-suggestion-item search-history-item" data-history="${escapeHTML(k)}">
+          <span class="sug-name">🕓 ${escapeHTML(k)}</span>
+          <span class="remove-history" data-remove="${escapeHTML(k)}">&times;</span>
+        </div>
+      `).join('');
+    box.classList.add('open');
+    bindSuggestionEvents();
+    return;
+  }
+
+  const matches = ALL_COURSES.filter(c => c.tenkh.toLowerCase().includes(keyword)).slice(0, 8);
+
+  if (!matches.length) {
+    box.innerHTML = '<div class="search-suggestion-empty">Không tìm thấy khóa học phù hợp</div>';
+    box.classList.add('open');
+    return;
+  }
+
+  box.innerHTML = matches.map(c => `
+    <div class="search-suggestion-item" data-makh="${c.makh}" data-name="${escapeHTML(c.tenkh)}">
+      <span class="sug-name">${escapeHTML(c.tenkh)}</span>
+      <span class="sug-price">${Number(c.gia).toLocaleString('vi-VN')}đ</span>
+    </div>
+  `).join('');
+  box.classList.add('open');
+  bindSuggestionEvents();
+}
+
+function bindSuggestionEvents() {
+  const box = document.getElementById('searchSuggestions');
+  if (!box) return;
+
+  box.querySelectorAll('.search-suggestion-item[data-makh]').forEach(item => {
+    item.addEventListener('click', () => {
+      addSearchHistory(item.dataset.name);
+      goToCourse(item.dataset.makh);
     });
   });
+
+  box.querySelectorAll('.search-history-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('.remove-history')) return;
+      const keyword = item.dataset.history;
+      document.getElementById('searchInput').value = keyword;
+      renderSearchSuggestions(keyword);
+    });
+  });
+
+  box.querySelectorAll('.remove-history').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      removeSearchHistory(btn.dataset.remove);
+      renderSearchSuggestions(document.getElementById('searchInput').value);
+    });
+  });
+}
+
+function goToCourse(makh) {
+  const box = document.getElementById('searchSuggestions');
+  const input = document.getElementById('searchInput');
+  const card = document.querySelector(`.roadmap .course-card[data-makh="${makh}"]`);
+
+  box.classList.remove('open');
+  input.value = '';
+
+  if (!card) return;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => toggleDetail(card, makh), 300);
 }
 
 function showFlashToast() {

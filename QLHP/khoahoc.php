@@ -93,7 +93,10 @@ unset($c);
 ?>
 
 <div class="khoahoc-toolbar">
-  <input type="text" id="searchInput" placeholder="Tìm khóa học TOEIC, IELTS, VSTEP...">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Tìm khóa học TOEIC, IELTS, VSTEP..." autocomplete="off">
+    <div id="searchSuggestions" class="search-suggestions"></div>
+  </div>
 </div>
 
 <div class="khoahoc-container"
