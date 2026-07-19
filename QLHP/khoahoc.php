@@ -76,6 +76,8 @@ if ($is_logged_in) {
 }
 $registered_ids = array_column($registered, 'makh');
 
+$view_mode = $_GET['view'] ?? null;
+
 $category_titles = [
   'toeic'    => ['Lộ trình TOEIC', 'Dành cho người cần thi chứng chỉ 2 kỹ năng nghe đọc truyền thống.', 'grad-toeic'],
   'ielts'    => ['Lộ trình IELTS', 'Chuẩn học thuật Academic quốc tế phục vụ du học, xét tuyển.', 'grad-ielts'],
@@ -133,6 +135,13 @@ unset($c);
     </section>
   <?php endif; ?>
 
+  <?php if ($view_mode === 'current' && $is_logged_in && !empty($registered)): ?>
+    <section class="category other-courses">
+      <div class="category-head" style="text-align: center;">
+        <h2>Các khoá học khác</h2>
+      </div>
+  <?php endif; ?>
+
   <?php foreach ($courses as $key => $course_list):
     [$title, $desc] = $category_titles[$key] ?? [$key, ''];
   ?>
@@ -171,6 +180,10 @@ unset($c);
       </div>
     </section>
   <?php endforeach; ?>
+
+  <?php if ($view_mode === 'current' && $is_logged_in && !empty($registered)): ?>
+    </section>
+  <?php endif; ?>
 
 </div>
 

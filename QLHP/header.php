@@ -89,7 +89,7 @@
                     </a>
                     <ul class="submenu profile-menu">
                         <li><a href="profile.php"><i class="fa-regular fa-id-card"></i> Thông tin cá nhân</a></li>
-                        <li><a href="khoahoc.php"><i class="fa-solid fa-book"></i> Khóa học hiện tại</a></li>
+                        <li><a href="khoahoc.php?view=current"><i class="fa-solid fa-book"></i> Khóa học hiện tại</a></li>
                         <li><a href="update.php"><i class="fa-solid fa-pen-to-square"></i> Cập nhật thông tin</a></li>';
                 if ($user["name"] === 'admin') {
                     echo '<li class="divider"></li>';
