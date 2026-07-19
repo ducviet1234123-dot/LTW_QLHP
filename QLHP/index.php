@@ -12,7 +12,7 @@
         <div class="container">
             <div class="hero-left">
                 <span class="hero-badge">
-                    🔥 Cam kết tăng 1.0 band IELTS
+                     🔥 Cam kết tăng 1.0 band IELTS
                 </span>
                 <h1>Học IELTS cùng <span>English Master</span></h1>
                 <p>

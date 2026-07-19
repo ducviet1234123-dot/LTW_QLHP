@@ -105,8 +105,7 @@
             } else {
                 echo '
                     <a class="login" href="dangnhap.php">Đăng nhập</a>
-                    <a class="register" href="dangky.php">Đăng ký</a>
-                ';
+                    <a class="register" href="dangky.php">Đăng ký</a>';
             }
             ?>
         </div>
