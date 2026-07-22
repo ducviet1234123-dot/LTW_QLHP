@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+
 $is_logged_in     = isset($_SESSION['user']);
 $current_user_id  = $_SESSION['user']['ID'] ?? null;
 
@@ -120,7 +121,8 @@ unset($c);
         ?>
           <div class="course-card enrolled">
             <div class="card-media card-media-photo">
-              <img src="<?php echo htmlspecialchars($c['hinhanh']); ?>" alt="<?php echo htmlspecialchars($c['tenkh']); ?>">
+              <img src="<?php echo htmlspecialchars(!empty($c['hinhanh']) ? $c['hinhanh'] : 'img/default-course.jpg'); ?>" alt="<?php echo htmlspecialchars($c['tenkh']); ?>" style="width: 100%; height: 180px; object-fit: cover;">
+              
             </div>
             <div class="card-body">
               <h3><?php echo htmlspecialchars($c['tenkh']); ?></h3>
@@ -160,7 +162,7 @@ unset($c);
             onclick="toggleDetail(this, '<?php echo $course['makh']; ?>')">
 
             <div class="card-media card-media-photo">
-              <img src="<?php echo htmlspecialchars($course['hinhanh']); ?>" alt="<?php echo htmlspecialchars($course['tenkh']); ?>">
+              <img src="<?php echo htmlspecialchars(!empty($course['hinhanh']) ? $course['hinhanh'] : 'img/default-course.jpg'); ?>" alt="<?php echo htmlspecialchars($course['tenkh']); ?>" style="width: 100%; height: 200px; object-fit: cover; display: block;">
             </div>
 
             <div class="card-body">

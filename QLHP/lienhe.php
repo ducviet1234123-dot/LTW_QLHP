@@ -5,8 +5,8 @@
 require_once('mysqlConnect.php');
 
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+    session_start(); 
+} 
 
 $name = isset($_POST['name']) ? $_POST['name'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -27,7 +27,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
     } else {
         echo "<script>alert('Đã xảy ra lỗi khi gửi tin nhắn. Vui lòng thử lại sau.');</script>";
     }
-
+    
     $stmt->close();
 }
 ?>
@@ -37,7 +37,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
         <div class="contact-info-list">
             <div class="info-item">
                 <span class="icon">📍</span>
-                <p>Toà nhà Ladeco, 266 Đội Cấn, phường Liễu Giai, Quận Ba Đình, Hà Nội</p>
+                <p>Trường Đại học Cần Thơ Khu II, Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ</p>
             </div>
             <div class="info-item">
                 <span class="icon">📞</span>
@@ -59,7 +59,15 @@ if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
                     <input type="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="Email" required>
                 </div>
                 <div class="row">
-                    <input type="text" name="subject" placeholder="Tiêu đề cần tư vấn" required>
+                    <!-- Dropdown thay cho thẻ input text cũ -->
+                    <select name="subject" required>
+                        <option value="" disabled selected>Chọn chủ đề cần tư vấn</option>
+                        <option value="IELTS">IELTS</option>
+                        <option value="TOEIC">TOEIC</option>
+                        <option value="VSTEP">VSTEP</option>
+                        <option value="Cambridge English">Cambridge English</option>
+                        <option value="Tiếng Anh Giao Tiếp">Tiếng Anh Giao Tiếp</option>
+                    </select>
                 </div>
                 <div class="row">
                     <textarea name="message" rows="5" placeholder="Nội dung lời nhắn..." required></textarea>
@@ -71,7 +79,8 @@ if (isset($_POST['submit']) && $_POST['submit'] === 'sendContact') {
         </div>
     </div>
     <div class="contact-right">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8954452285197!2d105.81403517596956!3d21.036869287501317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1446924849%3A0x6bba8475928d3283!2zMjY2IMSQ4buZaSBD4bqlbiwgTGnhu4V1IEdpYWksIEJhIMSQw6xuaCwgSMOgIE7hu5lpLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- Đã đổi link iframe Google Maps thành Đại học Cần Thơ Khu 2 -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.841454343722!2d105.76804037503115!3d10.029938990077054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0895a51d60719%3A0x9d76b0035f6d53d0!2sCan%20Tho%20University!5e0!3m2!1sen!2s!4v1690000000000!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>
 
